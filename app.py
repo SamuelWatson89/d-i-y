@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for, current_app, Blueprint
+from flask import Flask, render_template, redirect, request, url_for, current_app, session
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 from flask_paginate import Pagination, get_page_parameter, get_page_args
@@ -9,6 +9,10 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'diy'
 app.config["MONGO_URI"] = os.getenv(
     'MONGO_URI', 'mongodb+srv://Sam:MongoSam@myfirstcluster-odltf.mongodb.net/diy?retryWrites=true')
+
+
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 mongo = PyMongo(app)
 
@@ -41,9 +45,32 @@ def get_projects():
                            )
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == "POST":
+        session["username"] = request.form["username"]
+        session['logged_in'] = True
+    if "username" in session:
+        return redirect(url_for("get_projects", username=session["username"]))
     return render_template('login.html')
+
+
+@app.route("/login/<username>", methods=["GET", "POST"])
+def user(username):
+    if request.method == "POST":
+        username = session["username"]
+        return redirect(url_for("user", username=session["username"]))
+    return redirect(url_for("projects.html",
+                            username=username,
+                            ))
+
+
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    session['logged_in'] = False
+    return redirect(url_for('get_projects'))
 
 
 @app.route('/add_project')

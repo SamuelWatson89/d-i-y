@@ -18,19 +18,29 @@
             <div class="nav-wrapper">
                 <a href="{{ url_for('get_projects') }}" class="brand-logo center"><i
                         class="material-icons">build</i>DIY</a>
+
                 <a href="#" data-target="diy-side" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+                {% if session['logged_in'] %}
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('add_project') }}">Submit Project</a></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('login') }}">Login / Register</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
                 </ul>
+
+                {% else %}
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('login') }}">Login/Register</a></li>
+                </ul>
+                {% endif %}
             </div>
         </nav>
-        <ul class="sidenav" id="diy-side>
+
+        <ul class="sidenav" id="diy-side">
             <li><a href=" {{ url_for('add_project') }}">Submit Project</a></li>
         </ul>
-        <ul class="sidenav" id="diy-side>
+        <ul class="sidenav" id="diy-side">
             <li><a href=" {{ url_for('login') }}">Login / Register</a></li>
         </ul>
     </header>

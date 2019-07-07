@@ -1,39 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row">
-    <div class="s12 m8">
-        <h2>The home of all things DIY!</h2>
+    <div class="s12 m12">
+        <h2>The home of all things DIY {{ username }}!</h2>
         <h5>Find projects to help improve you home, garden or even yourself!</h5>
     </div>
-    {{ pagination.info }}
-    {{ pagination.links }}
+    <div class="col m8">
+        {% for project in projects %}
+        <div class="col s4 m4">
+            <div class="card hoverable">
+                <div class="card-image">
+                    <img src="https://picsum.photos/200">
+                    <span class="card-title">{{project.title}}</span>
+                </div>
 
-    {% for project in projects %}
-    <div class="col s12 m4">
-        <div class="card">
-            <div class="card-image">
-                <img src="https://picsum.photos/200">
-                <span class="card-title">{{project.title}}</span>
-            </div>
+                <div class="card-content">
+                    <p>
+                        {{project.experience}} - {{project.category_name}}
+                        <br>
+                        {{project.description}}
+                        <br>
+                    </p>
+                </div>
 
-            {{ loop.index + pagination.skip }}
-
-            <div class="card-content">
-                <p>
-                    {{project.experience}} - {{project.category_name}}
-                    <br>
-                    {{project.description}}
-                    <br>
-                </p>
-            </div>
-
-            <div class="card-action">
-                <a href="{{url_for('view_project', projects_id=project._id)}}">Give it a try</a>
+                <div class="card-action">
+                    <a href="{{url_for('view_project', projects_id=project._id)}}">Give it a try</a>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-
-    {{ pagination.links }}
+    <div class="col m12">
+        {{ pagination.info }}
+        {{ pagination.links }}
+    </div>
 </div>
 {% endblock %}

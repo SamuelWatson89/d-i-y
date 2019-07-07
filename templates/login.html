@@ -3,10 +3,13 @@
 
 <div class="row">
     <div class="s12 m8">
-        <div class="input-field col s6">
-            <input value="Alvin" id="first_name2" type="text" class="validate">
-            <label class="active" for="first_name2">First Name</label>
-        </div>
+        <form method="POST">
+            <div class="input-field col s6">
+                <input id="username" name="username" type="text" class="validate">
+                <label class="active" for="username">Enter Your Username</label>
+            </div>
+            <button class="waves-effect waves-light btn" type="submit" name="submit">Log In</button>
+        </form>
     </div>
 </div>
 {% endblock %}
