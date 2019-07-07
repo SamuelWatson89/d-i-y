@@ -22,21 +22,9 @@
         </div>
 
         <div class="row">
-            <div class="file-field input-field col s12">
-                <div class="btn">
-                    <span>File</span>
-                    <input name="projectImage" id="projectImage" type="file" multiple>
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" placeholder="Upload one or more files">
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">poll</i>
-                <select id="category" name="category_name">
+                <select id="category" name="category">
                     <option value="" disabled selected>Choose Category</option>
                     {% for cat in category %}
                     <option value="{{cat.category_name}}">{{cat.category_name}}</option>
@@ -48,11 +36,9 @@
 
         <div class="row">
             <div class="input-field col s12">
-                <div class="chips chips-placeholder col s12">
-                    <i class="material-icons prefix">subject</i>
-                    <input id="martials" name="materials" class="validate">
-                    <label for="icon_telephone">Material of project</label>
-                </div>
+                <i class="material-icons prefix">subject</i>
+                <input id="materials" name="materials" class="validate">
+                <label for="icon_telephone">Material of project</label>
             </div>
         </div>
 

@@ -16,15 +16,22 @@
     <header>
         <nav>
             <div class="nav-wrapper">
-                <a href="{{ url_for('get_projects') }}" class="brand-logo">DIY</a>
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                <a href="{{ url_for('get_projects') }}" class="brand-logo center"><i
+                        class="material-icons">build</i>DIY</a>
+                <a href="#" data-target="diy-side" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('add_project') }}">Submit Project</a></li>
                 </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('login') }}">Login / Register</a></li>
+                </ul>
             </div>
         </nav>
-        <ul class="sidenav" id="mobile-demo">
-            <li><a href="{{ url_for('add_project') }}">Submit Project</a></li>
+        <ul class="sidenav" id="diy-side>
+            <li><a href=" {{ url_for('add_project') }}">Submit Project</a></li>
+        </ul>
+        <ul class="sidenav" id="diy-side>
+            <li><a href=" {{ url_for('login') }}">Login / Register</a></li>
         </ul>
     </header>
 
