@@ -1,17 +1,18 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, current_app, session
+from dotenv import load_dotenv
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 
 
 app = Flask(__name__)
+load_dotenv()
 app.config["MONGO_DBNAME"] = 'diy'
-app.config["MONGO_URI"] = os.getenv(
-    'MONGO_URI', 'mongodb+srv://Sam:MongoSam@myfirstcluster-odltf.mongodb.net/diy?retryWrites=true')
+app.config["MONGO_URI"] = os.getenv('MONGODB_URI')
 
 
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = os.getenv('SECRET_KEY')
 
 
 mongo = PyMongo(app)
