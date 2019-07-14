@@ -21,20 +21,15 @@ mongo = PyMongo(app)
 @app.route('/')
 @app.route('/get_projects')
 def get_projects():
-
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 6
     offset = (page - 1) * per_page
-
     search = False
-
     q = request.args.get('q')
     if q:
         search = True
-
     projects = mongo.db.projects.find().sort('_id')[offset: offset + per_page]
     projects_to_render = projects.limit(per_page)
-
     pagination = Pagination(page=page, per_page=per_page,
                             total=projects.count(),
                             offset=offset,
@@ -68,7 +63,6 @@ def user(username):
 
 @app.route('/logout')
 def logout():
-    # remove the username from the session if it's there
     session.pop('username', None)
     session['logged_in'] = False
     return redirect(url_for('get_projects'))
@@ -77,8 +71,7 @@ def logout():
 @app.route('/add_project')
 def add_project():
     return render_template('addproject.html',
-                           category=mongo.db.category.find(),
-                           materials=mongo.db.materials.find())
+                           category=mongo.db.category.find())
 
 
 @app.route('/insert_project', methods=['POST'])
@@ -98,7 +91,7 @@ def view_project(projects_id):
 @app.route('/edit_projects/<projects_id>')
 def edit_projects(projects_id):
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
-    all_categories = mongo.db.categories.find()
+    all_categories = mongo.db.category.find()
     return render_template('editproject.html',
                            projects=the_projects,
                            category=mongo.db.category.find())

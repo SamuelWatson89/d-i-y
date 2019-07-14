@@ -37,16 +37,23 @@
             </div>
         </nav>
 
+        {% if session['logged_in'] %}
         <ul class="sidenav" id="diy-side">
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+
             <li><a href=" {{ url_for('add_project') }}">Submit Project</a></li>
         </ul>
+
+        {% else %}
         <ul class="sidenav" id="diy-side">
             <li><a href=" {{ url_for('login') }}">Login / Register</a></li>
         </ul>
+        {% endif %}
     </header>
 
     <section class="container">
         {% block content %}
+
         {% endblock %}
     </section>
 

@@ -7,9 +7,9 @@
         <h5>Find projects to help improve you home, garden or even yourself!</h5>
     </div>
 
-    <div class="col m8">
+    <div class="col s12 m8 l10">
         {% for project in projects %}
-        <div class="col s4 m4">
+        <div class="col s12 m6 l4">
             <div class="card hoverable">
                 <div class="card-image">
                     <a href="{{url_for('view_project', projects_id=project._id)}}"><img
@@ -19,7 +19,7 @@
 
                 <div class="card-content">
                     <p>
-                        {{project.experience}} - {{project.category_name}}
+                        {{project.experience}} - {{project.category}}
                         <br>
                         {{project.description}}
                         <br>
