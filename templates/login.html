@@ -2,14 +2,28 @@
 {% block content %}
 
 <div class="row">
-    <div class="s12 m8">
-        <form method="POST">
-            <div class="input-field col s6">
-                <input id="username" name="username" type="text" class="validate">
-                <label class="active" for="username">Enter Your Username</label>
-            </div>
-            <button class="waves-effect waves-light btn" type="submit" name="submit">Log In</button>
-        </form>
+    <div class="s12">
+        <h3>Sign in to share your creativity!</h3>
+        <p>An account is required to submit projects</p>
+    </div>
+
+    <div class="col s12 l6 offset-l3 center-align">
+        <div class="card-panel">
+            <form method="POST">
+                <div class="row">
+                    <div class="input-field col s10 offset-s1">
+                        <input id="username" name="username" type="text" class="validate" required>
+                        <label class="active" for="username">Enter Your Username</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="s-12">
+                        <button class="waves-effect waves-light btn-large" type="submit" name="submit">Log In</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}

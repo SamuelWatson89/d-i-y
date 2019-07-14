@@ -1,23 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="row">
-    <h2>{{projects.title}}</h2>
+    <!--This is row to push the content down the page a little-->
+</div>
 
-    <div class="col s12 m4">
-        {{projects.projectImage}}
+<div class="row">
+    <div class="col s12 m4 deep-orange lighten-4">
+        <h2>{{projects.title}}</h2>
         <p>
             {{projects.experience}} - {{projects.category_name}}
             <br>
-            {{projects.description}}
-            <br>
-            {{projects.steps}}
         </p>
     </div>
-    <div class="col s12">
-        <a href="{{url_for('delete_project', projects_id=projects._id)}}"
-            class="waves-effect waves-light btn btn-small">Delete Task</a>
-        <a href="{{url_for('edit_projects', projects_id=projects._id)}}"
-            class="waves-effect waves-light btn btn-small blue">Edit</a>
+    <div class="col s12 m8">
+        <img src="https://picsum.photos/700/400" class="right">
+        {{projects.projectImage}}
     </div>
 </div>
+
+<div class="row">
+    <div class="col s12">
+        <h4>{{projects.description}}</h4>
+
+        <p>{{projects.steps}}</p>
+    </div>
+</div>
+
+
+
+{% if session['logged_in'] %}
+<div class="col s12">
+    <a href="{{url_for('delete_project', projects_id=projects._id)}}"
+        class="waves-effect waves-light btn btn-small">Delete Task</a>
+    <a href="{{url_for('edit_projects', projects_id=projects._id)}}"
+        class="waves-effect waves-light btn btn-small blue">Edit</a>
+</div>
+{% endif %}
 {% endblock %}

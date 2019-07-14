@@ -56,7 +56,7 @@ def login():
     return render_template('login.html')
 
 
-@app.route("/login/<username>", methods=["GET", "POST"])
+@app.route("/login/<username>", methods=['GET', 'POST'])
 def user(username):
     if request.method == "POST":
         username = session["username"]

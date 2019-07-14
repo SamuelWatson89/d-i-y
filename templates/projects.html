@@ -3,14 +3,17 @@
 <div class="row">
     <div class="s12 m12">
         <h2>The home of all things DIY {{ username }}!</h2>
+
         <h5>Find projects to help improve you home, garden or even yourself!</h5>
     </div>
+
     <div class="col m8">
         {% for project in projects %}
         <div class="col s4 m4">
             <div class="card hoverable">
                 <div class="card-image">
-                    <img src="https://picsum.photos/200">
+                    <a href="{{url_for('view_project', projects_id=project._id)}}"><img
+                            src="https://picsum.photos/200"></a>
                     <span class="card-title">{{project.title}}</span>
                 </div>
 
@@ -23,13 +26,15 @@
                     </p>
                 </div>
 
-                <div class="card-action">
-                    <a href="{{url_for('view_project', projects_id=project._id)}}">Give it a try</a>
+                <div class="card-action center-align">
+                    <a href="{{url_for('view_project', projects_id=project._id)}}"
+                        class="waves-effect waves-light btn-small">Give it a try</a>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
+
     <div class="col m12">
         {{ pagination.info }}
         {{ pagination.links }}
