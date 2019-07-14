@@ -4,18 +4,17 @@
     <!--This is row to push the content down the page a little-->
 </div>
 
-
 <div class="row">
     <div class="col s12 m4 deep-orange lighten-4">
         <h2>{{projects.title}}</h2>
         <p>
-            {{projects.experience}} - {{projects.category_name}}
+            {{projects.experience}} - {{projects.category}}
             <br>
         </p>
     </div>
     <div class="col s12 m8">
-        <img src="https://picsum.photos/700/400" class="right">
-        {{projects.projectImage}}
+        <img src="{{url_for('file', filename=projects['project_image_name'])}}" alt="{{projects.project_image_name}}"
+            width="400">
     </div>
 </div>
 
@@ -45,9 +44,5 @@
     </div>
 </div>
 {% endif %}
-
-
-
-
 
 {% endblock %}

@@ -4,7 +4,7 @@
 <h3>Add a project</h3>
 
 <div class="row">
-    <form action="{{ url_for('insert_project') }}" method="POST" class="col s12">
+    <form action="{{ url_for('insert_project') }}" method="POST" class="col s12" enctype="multipart/form-data">
         <div class="row">
             <div class="input-field col s6">
                 <i class="material-icons prefix">title</i>
@@ -44,6 +44,18 @@
                 <i class="material-icons prefix">linear_scale</i>
                 <textarea name="steps" id="steps" class="materialize-textarea" rows="10"></textarea>
                 <label for="icon_telephone">Steps to make project</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>File</span>
+                    <input type="file" id="project_image" name="project_image">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" id="project_image_name" name="project_image_name">
+                </div>
             </div>
         </div>
 

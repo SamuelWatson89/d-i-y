@@ -1,20 +1,17 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for, current_app, session
+from flask import Flask, render_template, redirect, request, url_for, current_app, session, flash
 from dotenv import load_dotenv
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 from flask_paginate import Pagination, get_page_parameter, get_page_args
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__)
 load_dotenv()
 app.config["MONGO_DBNAME"] = 'diy'
 app.config["MONGO_URI"] = os.getenv('MONGODB_URI')
-
-
 app.secret_key = os.getenv('SECRET_KEY')
-
-
 mongo = PyMongo(app)
 
 
@@ -28,13 +25,18 @@ def get_projects():
     q = request.args.get('q')
     if q:
         search = True
-    projects = mongo.db.projects.find().sort('_id')[offset: offset + per_page]
+
+    projects = mongo.db.projects.find().sort('_id', pymongo.DESCENDING)[
+        offset: offset + per_page]
+
     projects_to_render = projects.limit(per_page)
+
     pagination = Pagination(page=page, per_page=per_page,
                             total=projects.count(),
                             offset=offset,
                             search=search,
                             )
+
     return render_template("projects.html",
                            projects=projects,
                            pagination=pagination,
@@ -76,9 +78,16 @@ def add_project():
 
 @app.route('/insert_project', methods=['POST'])
 def insert_project():
+    project_image = request.files['project_image']
+    mongo.save_file(project_image.filename, project_image)
     projects = mongo.db.projects
     projects.insert_one(request.form.to_dict())
     return redirect(url_for('get_projects'))
+
+
+@app.route('/file/<filename>')
+def file(filename):
+    return mongo.send_file(filename)
 
 
 @app.route('/view_project/<projects_id>')
