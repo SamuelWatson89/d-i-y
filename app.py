@@ -6,7 +6,6 @@ from bson.objectid import ObjectId
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from werkzeug.utils import secure_filename
 
-
 app = Flask(__name__)
 load_dotenv()
 app.config["MONGO_DBNAME"] = 'diy'
