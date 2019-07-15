@@ -124,3 +124,8 @@ def update_projects(projects_id):
 def delete_project(projects_id):
     mongo.db.projects.remove({'_id': ObjectId(projects_id)})
     return redirect(url_for('get_projects'))
+
+
+if __name__ == '__main__':
+    app.run(host=os.environ.get('IP'),
+            port=int(os.environ.get('PORT')))
