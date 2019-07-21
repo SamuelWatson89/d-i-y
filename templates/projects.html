@@ -6,6 +6,17 @@
 
         <h5>Find projects to help improve you home, garden or even yourself!</h5>
     </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="row  light-green darken-1">
+        <div class="col">
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
 
     <div class="col s12 m8 l10">
         {% for project in projects %}

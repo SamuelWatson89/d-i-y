@@ -10,6 +10,7 @@ app = Flask(__name__)
 load_dotenv()
 app.config["MONGO_DBNAME"] = 'diy'
 app.config["MONGO_URI"] = os.getenv('MONGODB_URI')
+app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.secret_key = os.getenv('SECRET_KEY')
 mongo = PyMongo(app)
 
@@ -71,17 +72,48 @@ def logout():
 
 @app.route('/add_project')
 def add_project():
-    return render_template('addproject.html',
-                           category=mongo.db.category.find())
+    if "username" in session:
+        return render_template('addproject.html', category=mongo.db.category.find())
+    else:
+        return redirect(url_for('login'))
 
 
-@app.route('/insert_project', methods=['POST'])
+def allowed_image(filename):
+    if not "." in filename:
+        return False
+    ext = filename.rsplit(".", 1)[1]
+    if ext.upper() in app.config["ALLOWED_IMAGE_EXTENSIONS"]:
+        return True
+    else:
+        return False
+
+
+@app.route('/insert_project', methods=['GET', 'POST'])
 def insert_project():
-    project_image = request.files['project_image']
-    mongo.save_file(project_image.filename, project_image)
-    projects = mongo.db.projects
-    projects.insert_one(request.form.to_dict())
-    return redirect(url_for('get_projects'))
+    if request.method == "POST":
+
+        if request.files:
+
+            project_image = request.files['project_image']
+
+            if project_image.filename == "":
+                print("Image must have a name")
+                flash("Image must have a name")
+                return redirect(url_for('add_project'))
+
+            if not allowed_image(project_image.filename):
+                print("That image extension is not allawed")
+                flash("That image extension is not allawed")
+                return redirect(url_for('add_project'))
+
+            else:
+                filename = secure_filename(project_image.filename)
+                mongo.save_file(project_image.filename, project_image)
+
+            projects = mongo.db.projects
+            projects.insert_one(request.form.to_dict())
+            flash("AWESOME! You just submitted your project!")
+            return redirect(url_for('get_projects'))
 
 
 @app.route('/file/<filename>')
@@ -100,9 +132,10 @@ def view_project(projects_id):
 def edit_projects(projects_id):
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     all_categories = mongo.db.category.find()
-    return render_template('editproject.html',
-                           projects=the_projects,
-                           category=mongo.db.category.find())
+    if "username" in session:
+        return render_template('editproject.html', projects=the_projects, category=mongo.db.category.find())
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/update_projects/<projects_id>', methods=["POST"])
