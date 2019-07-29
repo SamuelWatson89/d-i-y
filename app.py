@@ -1,10 +1,16 @@
 import os
 from flask import Flask, render_template, redirect, request, url_for, current_app, session, flash
 from dotenv import load_dotenv
+from flask_material import Material
 from flask_pymongo import PyMongo, pymongo
 from bson.objectid import ObjectId
 from flask_paginate import Pagination, get_page_parameter, get_page_args
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms.validators import InputRequired, Email, Length
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 app = Flask(__name__)
 load_dotenv()
@@ -13,6 +19,25 @@ app.config["MONGO_URI"] = os.getenv('MONGODB_URI')
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.secret_key = os.getenv('SECRET_KEY')
 mongo = PyMongo(app)
+Material(app)
+
+
+class LoginForm(FlaskForm):
+    username = StringField('username', validators=[
+                           InputRequired(), Length(min=4, max=15)])
+    password = PasswordField('password', validators=[
+                             InputRequired(), Length(min=8, max=80)])
+    remember = BooleanField(
+        'remember me', description='Checkboxes can be tricky.')
+
+
+class RegisterForm(FlaskForm):
+    email = StringField('email', validators=[InputRequired(), Email(
+        message='Invalid email'), Length(max=50)])
+    username = StringField('username', validators=[
+                           InputRequired(), Length(min=4, max=15)])
+    password = PasswordField('password', validators=[
+                             InputRequired(), Length(min=8, max=80)])
 
 
 @app.route('/')
@@ -45,22 +70,51 @@ def get_projects():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == "POST":
-        session["username"] = request.form["username"]
-        session['logged_in'] = True
-    if "username" in session:
-        return redirect(url_for("get_projects", username=session["username"]))
-    return render_template('login.html')
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = mongo.db.users.find_one({'username': form.username.data})
+        if user:
+            if check_password_hash(user['password'], form.password.data):
+                return redirect(url_for('get_projects'))
+        return '<h1> User does not exsist!</h1>'
+
+    return render_template('login.html', form=form)
 
 
-@app.route("/login/<username>", methods=['GET', 'POST'])
-def user(username):
-    if request.method == "POST":
-        username = session["username"]
-        return redirect(url_for("user", username=session["username"]))
-    return redirect(url_for("projects.html",
-                            username=username,
-                            ))
+# @app.route('/login', methods=['GET', 'POST'])
+# def login():
+#     if request.method == "POST":
+#         session["username"] = request.form["username"]
+#         session['logged_in'] = True
+#     if "username" in session:
+#         return redirect(url_for("get_projects", username=session["username"]))
+#     return render_template('login.html')
+
+
+# @app.route("/login/<username>", methods=['GET', 'POST'])
+# def user(username):
+#     if request.method == "POST":
+#         username = session["username"]
+#         return redirect(url_for("user", username=session["username"]))
+#     return redirect(url_for("projects.html",
+#                             username=username,
+#                             ))
+
+
+@app.route("/signup", methods=['GET', 'POST'])
+def signup():
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        hashed_password = generate_password_hash(
+            form.password.data, method='sha256')
+        new_user = [{"username": form.username.data,
+                     "email": form.email.data,
+                     "password": hashed_password}]
+        mongo.db.users.insert_many(new_user)
+        return '<h1> New User Added </h1>'
+    return render_template('signup.html', form=form)
 
 
 @app.route('/logout')

@@ -31,7 +31,8 @@
 
                 {% else %}
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('login') }}">Login/Register</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('signup') }}">Sign Up!</a></li>
                 </ul>
                 {% endif %}
             </div>
@@ -47,6 +48,7 @@
         {% else %}
         <ul class="sidenav" id="diy-side">
             <li><a href=" {{ url_for('login') }}">Login / Register</a></li>
+            <li><a href="{{ url_for('signup') }}">Sign Up!</a></li>
         </ul>
         {% endif %}
     </header>
