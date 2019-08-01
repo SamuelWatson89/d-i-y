@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for, current_app, session, flash
+from flask import Flask, render_template, redirect, request, url_for, current_app, flash
 from dotenv import load_dotenv
 from flask_material import Material
 from flask_pymongo import PyMongo, pymongo
@@ -20,6 +20,26 @@ app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
 app.secret_key = os.getenv('SECRET_KEY')
 mongo = PyMongo(app)
 Material(app)
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    users = mongo.db.users
+    new_user = users.find_one({'_id': ObjectId(user_id)})
+    return User(new_user)
+
+
+class User(UserMixin):
+    def __init__(self, new_user):
+        self.new_user = new_user
+
+    def get_id(self):
+        object_id = self.new_user.get('_id')
+        return str(object_id)
 
 
 class LoginForm(FlaskForm):
@@ -76,30 +96,11 @@ def login():
         user = mongo.db.users.find_one({'username': form.username.data})
         if user:
             if check_password_hash(user['password'], form.password.data):
+                login_user(User(user))
                 return redirect(url_for('get_projects'))
         return '<h1> User does not exsist!</h1>'
 
     return render_template('login.html', form=form)
-
-
-# @app.route('/login', methods=['GET', 'POST'])
-# def login():
-#     if request.method == "POST":
-#         session["username"] = request.form["username"]
-#         session['logged_in'] = True
-#     if "username" in session:
-#         return redirect(url_for("get_projects", username=session["username"]))
-#     return render_template('login.html')
-
-
-# @app.route("/login/<username>", methods=['GET', 'POST'])
-# def user(username):
-#     if request.method == "POST":
-#         username = session["username"]
-#         return redirect(url_for("user", username=session["username"]))
-#     return redirect(url_for("projects.html",
-#                             username=username,
-#                             ))
 
 
 @app.route("/signup", methods=['GET', 'POST'])
@@ -113,23 +114,22 @@ def signup():
                      "email": form.email.data,
                      "password": hashed_password}]
         mongo.db.users.insert_many(new_user)
-        return '<h1> New User Added </h1>'
+        flash('Thank you for signing up!')
+        return redirect(url_for('get_projects'))
     return render_template('signup.html', form=form)
 
 
 @app.route('/logout')
+@login_required
 def logout():
-    session.pop('username', None)
-    session['logged_in'] = False
+    logout_user()
     return redirect(url_for('get_projects'))
 
 
 @app.route('/add_project')
+@login_required
 def add_project():
-    if "username" in session:
-        return render_template('addproject.html', category=mongo.db.category.find())
-    else:
-        return redirect(url_for('login'))
+    return render_template('addproject.html', category=mongo.db.category.find())
 
 
 def allowed_image(filename):
@@ -183,13 +183,12 @@ def view_project(projects_id):
 
 
 @app.route('/edit_projects/<projects_id>')
+@login_required
 def edit_projects(projects_id):
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     all_categories = mongo.db.category.find()
-    if "username" in session:
-        return render_template('editproject.html', projects=the_projects, category=mongo.db.category.find())
-    else:
-        return redirect(url_for('login'))
+
+    return render_template('editproject.html', projects=the_projects, category=mongo.db.category.find())
 
 
 @app.route('/update_projects/<projects_id>', methods=["POST"])

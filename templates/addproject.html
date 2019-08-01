@@ -4,7 +4,6 @@
 <h3>Add a project</h3>
 
 <div class="row">
-    {% if session['logged_in'] %}
     <form action="{{ url_for('insert_project') }}" method="POST" class="col s12" enctype="multipart/form-data">
         <div class="row">
             <div class="input-field col s6">
@@ -98,7 +97,6 @@
             </button>
         </div>
     </form>
-    {% endif %}
 </div>
 
 {% endblock %}
