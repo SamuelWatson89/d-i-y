@@ -7,9 +7,10 @@
 <div class="row">
     <div class="col s12 m4 deep-orange lighten-4">
         <h2>{{projects.title}}</h2>
+        <h5>Created by {{projects.creator}}</h5>
         <p>
-            {{projects.experience}} - {{projects.category}}
-            <br>
+            {{projects.category}} <br />
+            This project has been classed: {{projects.experience}}
         </p>
     </div>
     <div class="col s12 m8">
@@ -25,6 +26,9 @@
         <p>{{projects.steps}}</p>
     </div>
 </div>
+
+{% if current_user.is_authenticated %}
+{% if current_user.username.username == projects.creator %}
 <div class="col s12">
     <a href="{{url_for('edit_projects', projects_id=projects._id)}}"
         class="waves-effect waves-light btn-small blue darken-3">Edit</a>
@@ -41,5 +45,7 @@
         </div>
     </div>
 </div>
+{% endif %}
+{% endif %}
 
 {% endblock %}

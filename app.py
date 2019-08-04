@@ -26,20 +26,36 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
+class User(UserMixin):
+    def __init__(self, username):
+        self.username = username
+
+    @staticmethod
+    def is_authenticated():
+        return True
+
+    @staticmethod
+    def is_active():
+        return True
+
+    @staticmethod
+    def is_anonymous():
+        return False
+
+    def get_id(self):
+        object_id = self.username.get('_id')
+        return str(object_id)
+
+    @staticmethod
+    def check_password(password_hash, password):
+        return check_password_hash(password_hash, password)
+
+
 @login_manager.user_loader
 def load_user(user_id):
     users = mongo.db.users
-    new_user = users.find_one({'_id': ObjectId(user_id)})
-    return User(new_user)
-
-
-class User(UserMixin):
-    def __init__(self, new_user):
-        self.new_user = new_user
-
-    def get_id(self):
-        object_id = self.new_user.get('_id')
-        return str(object_id)
+    username = users.find_one({'_id': ObjectId(user_id)})
+    return User(username)
 
 
 class LoginForm(FlaskForm):
@@ -98,7 +114,8 @@ def login():
             if check_password_hash(user['password'], form.password.data):
                 login_user(User(user))
                 return redirect(url_for('get_projects'))
-        return '<h1> User does not exsist!</h1>'
+        flash('Sorry, that user does not exist')
+        return render_template('login.html', form=form)
 
     return render_template('login.html', form=form)
 
@@ -110,10 +127,11 @@ def signup():
     if form.validate_on_submit():
         hashed_password = generate_password_hash(
             form.password.data, method='sha256')
-        new_user = [{"username": form.username.data,
+        new_user = ({"username": form.username.data,
                      "email": form.email.data,
-                     "password": hashed_password}]
-        mongo.db.users.insert_many(new_user)
+                     "password": hashed_password})
+
+        mongo.db.users.insert_one(new_user)
         flash('Thank you for signing up!')
         return redirect(url_for('get_projects'))
     return render_template('signup.html', form=form)
@@ -129,7 +147,7 @@ def logout():
 @app.route('/add_project')
 @login_required
 def add_project():
-    return render_template('addproject.html', category=mongo.db.category.find())
+    return render_template('addproject.html', name=current_user.username, category=mongo.db.category.find())
 
 
 def allowed_image(filename):
@@ -145,9 +163,7 @@ def allowed_image(filename):
 @app.route('/insert_project', methods=['GET', 'POST'])
 def insert_project():
     if request.method == "POST":
-
         if request.files:
-
             project_image = request.files['project_image']
 
             if project_image.filename == "":
@@ -166,8 +182,9 @@ def insert_project():
 
             projects = mongo.db.projects
             projects.insert_one(request.form.to_dict())
-            flash("AWESOME! You just submitted your project!")
-            return redirect(url_for('get_projects'))
+        flash(
+            "AWESOME! You just submitted your project!")
+        return redirect(url_for('get_projects'))
 
 
 @app.route('/file/<filename>')

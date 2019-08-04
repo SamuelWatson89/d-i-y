@@ -35,7 +35,7 @@
                     <p>
                         {{project.experience}} - {{project.category}}
                         <br>
-                        {{project.description}}
+                        {{project.description|truncate(50, true)}}
                         <br>
                     </p>
                 </div>
