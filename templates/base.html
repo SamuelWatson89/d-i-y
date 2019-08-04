@@ -22,10 +22,14 @@
                 <a href="#" data-target="diy-side" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 {% if current_user.is_authenticated %}
                 <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                </ul>
+                <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('add_project') }}">Submit Project</a></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li><a href=""><i class="material-icons left">person</i>{{name.username}}</a>
+                    </li>
                 </ul>
                 {% else %}
                 <ul class="right hide-on-med-and-down">
@@ -36,16 +40,33 @@
             </div>
         </nav>
 
+        {% if current_user.is_authenticated %}
         <ul class="sidenav" id="diy-side">
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
-
+            <a>
+                <div class="user-view">
+                    <div class="background">
+                        <img src="https://placeimg.com/500/500/any">
+                    </div>
+                    <p class="white-text name">{{name.username}}</p>
+                    <p class="white-text email">{{name.email}}</p>
+                </div>
+            </a>
             <li><a href=" {{ url_for('add_project') }}">Submit Project</a></li>
+            <li><a href="{{ url_for('logout') }}">Logout</a></li>
         </ul>
 
+        {% else %}
         <ul class="sidenav" id="diy-side">
-            <li><a href=" {{ url_for('login') }}">Login / Register</a></li>
+            <div class="user-view">
+                <div class="background">
+                    <img src="https://placeimg.com/500/500/any">
+                </div>
+                <p>Hello... Shall we get you signed up?</p>
+            </div>
+            <li><a href=" {{ url_for('login') }}">Login</a></li>
             <li><a href="{{ url_for('signup') }}">Sign Up!</a></li>
         </ul>
+        {% endif %}
     </header>
 
     <section class="container">

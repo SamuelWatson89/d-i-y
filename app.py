@@ -97,11 +97,14 @@ def get_projects():
                             offset=offset,
                             search=search,
                             )
-
-    return render_template("projects.html",
+    if current_user.is_authenticated:
+        return render_template('projects.html',
+                               projects=projects,
+                               pagination=pagination,
+                               name=current_user.username)
+    return render_template('projects.html',
                            projects=projects,
-                           pagination=pagination,
-                           )
+                           pagination=pagination)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -147,7 +150,7 @@ def logout():
 @app.route('/add_project')
 @login_required
 def add_project():
-    return render_template('addproject.html', name=current_user.username, category=mongo.db.category.find())
+    return render_template('addproject.html', category=mongo.db.category.find(), name=current_user.username)
 
 
 def allowed_image(filename):
@@ -195,6 +198,9 @@ def file(filename):
 @app.route('/view_project/<projects_id>')
 def view_project(projects_id):
     the_project = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
+    if current_user.is_authenticated:
+        return render_template('viewproject.html',
+                               projects=the_project, name=current_user.username)
     return render_template('viewproject.html',
                            projects=the_project)
 
@@ -205,7 +211,7 @@ def edit_projects(projects_id):
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     all_categories = mongo.db.category.find()
 
-    return render_template('editproject.html', projects=the_projects, category=mongo.db.category.find())
+    return render_template('editproject.html', projects=the_projects, category=mongo.db.category.find(), name=current_user.username)
 
 
 @app.route('/update_projects/<projects_id>', methods=["POST"])
