@@ -59,20 +59,19 @@ def load_user(user_id):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('username', validators=[
+    username = StringField('Username', validators=[
                            InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[
+    password = PasswordField('Password', validators=[
                              InputRequired(), Length(min=8, max=80)])
-    remember = BooleanField(
-        'remember me', description='Checkboxes can be tricky.')
+    remember = BooleanField('remember me')
 
 
 class RegisterForm(FlaskForm):
-    email = StringField('email', validators=[InputRequired(), Email(
+    email = StringField('<h6>Email Address</h6> (valid email NOT required)', validators=[InputRequired(), Email(
         message='Invalid email'), Length(max=50)])
-    username = StringField('username', validators=[
+    username = StringField('<h6>Username</h6> (min 4 charaters)', validators=[
                            InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[
+    password = PasswordField('<h6>Password</h6> (min 8 charaters)', validators=[
                              InputRequired(), Length(min=8, max=80)])
 
 
@@ -126,7 +125,6 @@ def login():
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
-
     if form.validate_on_submit():
         hashed_password = generate_password_hash(
             form.password.data, method='sha256')
@@ -134,9 +132,17 @@ def signup():
                      "email": form.email.data,
                      "password": hashed_password})
 
-        mongo.db.users.insert_one(new_user)
-        flash('Thank you for signing up!')
-        return redirect(url_for('get_projects'))
+        if mongo.db.users.count_documents({'username': form.username.data}, limit=1) != 0:
+            flash('Username is taken, please choose another (sorry!)')
+            return render_template('signup.html', form=form)
+        elif mongo.db.users.count_documents({'email': form.email.data}, limit=1) != 0:
+            flash(
+                'Email address is already registered. Email support for assistance if needed.')
+            return render_template('signup.html', form=form)
+        else:
+            mongo.db.users.insert_one(new_user)
+            flash('Thank you for signing up!')
+            return redirect(url_for('get_projects'))
     return render_template('signup.html', form=form)
 
 
