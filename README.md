@@ -1,10 +1,11 @@
-# DIY Catalogue
+
+#DIY Catalogue
 
 D-I-Y is a online catalogue of home crafts and creations, with step by step tutorials on how to create differnet items in and around the home, or even something to better yourself.
 It will feature unique user logins and editable step by step guides.
- 
+
 ## UX
- 
+
 Use this section to provide insight into your UX process, focusing on who this website is for, what it is that they want to achieve and how your project is the best way to help them achieve these things.
 
 In particular, as part of this section we recommend that you provide a list of User Stories, with the following general structure:
@@ -47,19 +48,32 @@ User profile
 ## Technologies Used
 
 [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+
 [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
 [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+
 [Python](https://www.python.org/)
+
 [MongoDB](https://www.mongodb.com/)
 
+
 [Material CSS](https://materializecss.com/)
+
 [Flask](https://flask.palletsprojects.com/en/1.0.x/)
+
 [Pymongo](https://api.mongodb.com/python/current/)
+
 [Flask-Login](https://flask-login.readthedocs.io/en/latest/)
+
 [flask-paginate](https://pythonhosted.org/Flask-paginate/)
+
 [werkzeug](https://palletsprojects.com/p/werkzeug/)
+
 [flask_wtf](https://flask-wtf.readthedocs.io/en/stable/)
+
 [wtforms](https://wtforms.readthedocs.io/en/stable/)
+
 
 ## Testing
 
