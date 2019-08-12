@@ -56,7 +56,7 @@
             {% endif %}
             {% endwith %}
             <div class="file-field input-field">
-                <div class="btn">
+                <div class="btn green lighten-1">
                     <span>File</span>
                     <input type="file" id="project_image" name="project_image" required>
                 </div>
@@ -103,33 +103,11 @@
             </div>
         </div>
 
-        <div class="row">
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <div class="row orange lighten-2">
-                <p>
-                    {{ message }}
-                </p>
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-            <div class="file-field input-field">
-                <div class="btn">
-                    <span>File</span>
-                    <input type="file" id="project_image" name="project_image" required>
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text" id="project_image_name" name="project_image_name">
-                </div>
-            </div>
-        </div>
 
         <!--TODO: Add functionality to dynamically add another input. May have to change to WTForms-->
 
         <div class="row">
-            <button class="btn waves-effect waves-light" type="submit" name="action">Add Task
+            <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Add Task
                 <i class="material-icons right">add</i>
             </button>
         </div>

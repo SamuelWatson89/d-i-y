@@ -4,42 +4,46 @@
 {% block content %}
 
 <div class="row">
-    <div class="s12">
-        <h3>Sign in to share your creativity!</h3>
-        <p>An account is required to submit projects</p>
-    </div>
+
 
     <div class="col s12 l6 offset-l3 center-align">
-        <div class="card-panel">
-            <form method="POST" action="/login">
-                <div class="row">
-                    <div class="input-field col s10 offset-s1">
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        {% for message in messages %}
-                        <div class="row white-text red darken-1">
-                            <div class="col center-align">
-                                <p>{{ message }}</p>
-                            </div>
-                        </div>
-                        {% endfor %}
-                        {% endif %}
-                        {% endwith %}
-                        <!-- <input id="username" name="username" type="text" class="validate" required>
-                        <label class="active" for="username">Enter Your Username</label> -->
-                        {{ form.hidden_tag() }}
-                        {{ wtf.form_field(form.username) }}
-                        {{ wtf.form_field(form.password) }}
-                        {{ wtf.form_field(form.remember) }}
-                    </div>
-                </div>
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Sign in to share your creativity!</span>
+                <p>We can't wait to see your creativity &#128374;</p>
 
-                <div class="row">
-                    <div class="s-12">
-                        <button class="waves-effect waves-light btn-large" type="submit" name="submit">Log In</button>
+                <form method="POST" action="/login">
+                    <div class="row">
+                        <div class="input-field col s10 offset-s1">
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="row white-text red darken-1">
+                                <div class="col center-align">
+                                    <p>{{ message }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                            <!-- <input id="username" name="username" type="text" class="validate" required>
+                        <label class="active" for="username">Enter Your Username</label> -->
+                            {{ form.hidden_tag() }}
+                            {{ wtf.form_field(form.username) }}
+                            {{ wtf.form_field(form.password) }}
+                            {{ wtf.form_field(form.remember) }}
+                        </div>
                     </div>
-                </div>
-            </form>
+
+                    <div class="row">
+                        <div class="s-12">
+                            <button class="waves-effect waves-light btn-large green lighten-1" type="submit"
+                                name="submit">Log
+                                In</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>

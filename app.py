@@ -59,19 +59,19 @@ def load_user(user_id):
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[
+    username = StringField('<h6>Username &#128101;</h6>', validators=[
                            InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('Password', validators=[
+    password = PasswordField('<h6>Password &#128170;</h6>', validators=[
                              InputRequired(), Length(min=8, max=80)])
-    remember = BooleanField('remember me')
+    remember = BooleanField('<h6>remember me</h6>')
 
 
 class RegisterForm(FlaskForm):
-    email = StringField('<h6>Email Address</h6> (valid email NOT required)', validators=[InputRequired(), Email(
+    email = StringField('<h6>Email Address &#128231;</h6> (valid email NOT required)', validators=[InputRequired(), Email(
         message='Invalid email'), Length(max=50)])
-    username = StringField('<h6>Username</h6> (min 4 charaters)', validators=[
+    username = StringField('<h6>Username &#128101;</h6> (min 4 charaters)', validators=[
                            InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('<h6>Password</h6> (min 8 charaters)', validators=[
+    password = PasswordField('<h6>Password &#128170;</h6> (min 8 charaters)', validators=[
                              InputRequired(), Length(min=8, max=80)])
 
 
