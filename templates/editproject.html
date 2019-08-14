@@ -14,13 +14,13 @@
             <div class="input-field col s4">
                 <i class="material-icons prefix">account_box</i>
                 <input id="creator" name="creator" type="text" class="validate" value="{{ name.username }}" required>
-                <label for="icon_prefix">{{projects.creator}}</label>
+                <label for="creator">{{projects.creator}}</label>
             </div>
 
             <div class="input-field col s12 m4">
                 <i class="material-icons prefix">title</i>
                 <input id="title" name="title" type="text" class="validate" value="{{projects.title}}" required>
-                <label for="icon_prefix">{{projects.title}}</label>
+                <label for="title">{{projects.title}}</label>
             </div>
 
             <div class="input-field col s12 m4">
@@ -40,6 +40,7 @@
                 <i class="material-icons prefix">subject</i>
                 <textarea name="description" id="description" class="materialize-textarea"
                     value="{{projects.description}}">Project Description</textarea>
+                <label for="description">Description of project</label>
             </div>
         </div>
 
@@ -91,7 +92,7 @@
 
             <div class="input-field col s12 m9">
                 <i class="material-icons prefix">build</i>
-                <div class="chips chips-placeholder"></div>
+                <div id="materials" name="materials" class="chips chips-placeholder"></div>
             </div>
         </div>
 

@@ -13,13 +13,13 @@
             <div class="input-field col s4">
                 <i class="material-icons prefix">account_box</i>
                 <input id="creator" name="creator" type="text" class="validate" value="{{ name.username }}" required>
-                <label for="icon_prefix">Creator's name(You)</label>
+                <label for="creator">Creator's name(You)</label>
             </div>
 
             <div class="input-field col s12 m4">
                 <i class="material-icons prefix">title</i>
                 <input id="title" name="title" type="text" class="validate" required>
-                <label for="icon_prefix">Project name</label>
+                <label for="title">Project name</label>
             </div>
 
             <div class="input-field col s12 m4">
@@ -30,7 +30,7 @@
                     <option value="{{cat.category_name}}">{{cat.category_name}}</option>
                     {% endfor %}
                 </select>
-                <label>Task Category</label>
+                <label for="category">Task Category</label>
             </div>
         </div>
 
@@ -39,7 +39,7 @@
                 <i class="material-icons prefix">subject</i>
                 <textarea name="description" id="description" class="materialize-textarea" rows="10"
                     required></textarea>
-                <label for="icon_subject">Description of project</label>
+                <label for="description">Description of project</label>
             </div>
         </div>
 
@@ -91,27 +91,28 @@
 
             <div class="input-field col s12 m9">
                 <i class="material-icons prefix">build</i>
-                <div class="chips chips-placeholder"></div>
+                <div class="chips"><input name="materials" id="materials"></div>
             </div>
         </div>
+</div>
 
-        <div class="row">
-            <div class="input-field col s12">
-                <i class="material-icons prefix">linear_scale</i>
-                <textarea name="steps" id="steps" class="materialize-textarea" rows="10" required></textarea>
-                <label for="icon_telephone">Steps to make project</label>
-            </div>
-        </div>
+<div class="row">
+    <div class="input-field col s12">
+        <i class="material-icons prefix">linear_scale</i>
+        <textarea name="steps" id="steps" class="materialize-textarea" rows="10" required></textarea>
+        <label for="steps">Steps to make project</label>
+    </div>
+</div>
 
 
-        <!--TODO: Add functionality to dynamically add another input. May have to change to WTForms-->
+<!--TODO: Add functionality to dynamically add another input. May have to change to WTForms-->
 
-        <div class="row">
-            <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Add Task
-                <i class="material-icons right">add</i>
-            </button>
-        </div>
-    </form>
+<div class="row">
+    <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Add Task
+        <i class="material-icons right">add</i>
+    </button>
+</div>
+</form>
 </div>
 
 {% endblock %}

@@ -172,8 +172,6 @@ def allowed_image(filename):
 @app.route('/insert_project', methods=['GET', 'POST'])
 def insert_project():
     if request.method == "POST":
-        if request.form['options']:
-            return
         if request.files:
             project_image = request.files['project_image']
 
