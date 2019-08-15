@@ -15,7 +15,7 @@
 <body>
     <header>
         <nav>
-            <div class="nav-wrapper">
+            <div class="nav-wrapper blue-grey darken-4">
                 <a href="{{ url_for('get_projects') }}" class="brand-logo center"><i
                         class="material-icons">build</i>D-I-Y</a>
 
@@ -69,11 +69,40 @@
         {% endif %}
     </header>
 
-    <section class="container">
+    <main class="container">
         {% block content %}
 
         {% endblock %}
-    </section>
+    </main>
+
+    <footer class="page-footer amber accent-4 black-text">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5>What the heck is this site for?!?</h5>
+                    <p>This website, webapp, was created by Samuel Watson for a project set by Code Institute.
+                        The Task is to create a Create Read Update Delete (CRUD) application in Flask, a Python
+                        micro-framework. <br />
+                        Its been a real treat!
+                    </p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="black-text">Look around</h5>
+                    <ul>
+                        <li><a class="black-text lighten-1" href="#!">Link 1</a></li>
+                        <li><a class="black-text lighten-1" href="#!">Link 2</a></li>
+                        <li><a class="black-text lighten-1" href="#!">Link 3</a></li>
+                        <li><a class="black-text lighten-1" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright black-text">
+            <div class="container">
+                © 2019 D-I-Y
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script type="text/javascript">

@@ -56,7 +56,7 @@
             {% endif %}
             {% endwith %}
             <div class="file-field input-field">
-                <div class="btn green lighten-1">
+                <div class="btn amber accent-4">
                     <span>File</span>
                     <input type="file" id="project_image" name="project_image" required>
                 </div>
@@ -71,19 +71,21 @@
             <div class="col s12 m3">
                 <p>
                     <label>
-                        <input name="experience" type="radio" value="Beginner" checked />
+                        <input class="with-gap" name="experience" type="radio" value="Beginner" checked />
                         <span>Beginner</span>
                     </label>
                 </p>
+
                 <p>
                     <label>
-                        <input name="experience" type="radio" value="Intermediate" />
+                        <input class="with-gap" name="experience" type="radio" value="Intermediate" />
                         <span>Intermediate</span>
                     </label>
                 </p>
+
                 <p>
                     <label>
-                        <input name="experience" type="radio" value="Advance" />
+                        <input class="with-gap" name="experience" type="radio" value="Advance" />
                         <span>Advance</span>
                     </label>
                 </p>
@@ -108,7 +110,7 @@
 <!--TODO: Add functionality to dynamically add another input. May have to change to WTForms-->
 
 <div class="row">
-    <button class="btn waves-effect waves-light green lighten-1" type="submit" name="action">Add Task
+    <button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Add Task
         <i class="material-icons right">add</i>
     </button>
 </div>

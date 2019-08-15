@@ -1,0 +1,61 @@
+body,
+html {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background: #F6E8EA;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+//? Font page styling
+
+.front-page-container {
+    h2 {
+        color: #263238;
+    }
+
+    .hoverable:hover {
+        box-shadow: 0 8px 17px 0 #26323833, 0 6px 20px 0 #26323833;
+    }
+
+    .card {
+        .card-title {
+            background: #ffab00;
+            background: linear-gradient(90deg, rgba(255, 171, 0, 1) 25%, rgba(255, 171, 0, 0.2553396358543417) 100%);
+        }
+    }
+}
+
+.pagination {
+
+    li.active {
+        background-color: #ffab00;
+    }
+}
+
+//? Submit project page styles
+
+[type="radio"]:checked+span:after,
+[type="radio"].with-gap:checked+span:before,
+[type="radio"].with-gap:checked+span:after {
+    border: 2px solid #ffab00;
+}
+
+[type="radio"]:checked+span:after,
+[type="radio"].with-gap:checked+span:after {
+    background-color: #ffab00;
+}
+
+
+//? Login and signup page styles
+
+.account-form {
+    background: rgba(255, 255, 255, 0.384);
+
+    label {
+        color: black;
+    }
+}
