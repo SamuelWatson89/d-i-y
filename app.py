@@ -225,14 +225,15 @@ def update_projects(projects_id):
     projects = mongo.db.projects
     projects.update({'_id': ObjectId(projects_id)},
                     {
-        'title': request.form.get('title'),
-        'creator': request.form.get('creator'),
-        'description': request.form.get('description'),
-        'category': request.form.get('category'),
-        'project_image_name': request.form.get('project_image_name'),
-        'materials': request.form.get('materials'),
-        'steps': request.form.get('steps')
-    })
+                    'title': request.form.get('title'),
+                    'creator': request.form.get('creator'),
+                    'description': request.form.get('description'),
+                    'category': request.form.get('category'),
+                    'project_image_name': request.form.get('project_image_name'),
+                    'materials': request.form.get('materials'),
+                    'steps': request.form.get('steps'),
+                    'experience': request.form.get('experience')
+                    })
     return redirect(url_for('get_projects'))
 
 
