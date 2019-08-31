@@ -14,6 +14,8 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 
 app = Flask(__name__)
 load_dotenv()
+
+# ? Connect to the Mongo Database
 app.config["MONGO_DBNAME"] = 'diy'
 app.config["MONGO_URI"] = os.getenv('MONGODB_URI')
 app.config["ALLOWED_IMAGE_EXTENSIONS"] = ["JPEG", "JPG", "PNG", "GIF"]
@@ -21,11 +23,13 @@ app.secret_key = os.getenv('SECRET_KEY')
 mongo = PyMongo(app)
 Material(app)
 
+# ? Define the flask_login manager.
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
+# ? Create the user class to handle user logins
 class User(UserMixin):
     def __init__(self, username):
         self.username = username
@@ -51,6 +55,7 @@ class User(UserMixin):
         return check_password_hash(password_hash, password)
 
 
+# ? Load the login manager and get the users form the database
 @login_manager.user_loader
 def load_user(user_id):
     users = mongo.db.users
@@ -58,6 +63,7 @@ def load_user(user_id):
     return User(username)
 
 
+# ? Create the form for the login page
 class LoginForm(FlaskForm):
     username = StringField('<h6>Username &#128101;</h6>', validators=[
                            InputRequired(), Length(min=4, max=15)])
@@ -66,6 +72,7 @@ class LoginForm(FlaskForm):
     remember = BooleanField('<h6>remember me</h6>')
 
 
+# ? Create the form for the register page
 class RegisterForm(FlaskForm):
     email = StringField('<h6>Email Address &#128231;</h6> (valid email NOT required)', validators=[InputRequired(), Email(
         message='Invalid email'), Length(max=50)])
@@ -75,6 +82,8 @@ class RegisterForm(FlaskForm):
                              InputRequired(), Length(min=8, max=80)])
 
 
+# ? Landing page route, get the project from the database and set up pagination for them.
+# ? If the user is logged in and authenticated, show the projects page.
 @app.route('/')
 @app.route('/get_projects')
 def get_projects():
@@ -106,6 +115,7 @@ def get_projects():
                            pagination=pagination)
 
 
+# ? Login page route, handles andauthenticates the user if the credentials are correct
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -122,6 +132,8 @@ def login():
     return render_template('login.html', form=form)
 
 
+# ? Register page route, handles validation of username, email and password.
+# ? If the details input already exist in the database, a flash message is shown with the error.
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     form = RegisterForm()
@@ -146,6 +158,7 @@ def signup():
     return render_template('signup.html', form=form)
 
 
+# ? Log out route, terminate the users login session and return them to the homepage.
 @app.route('/logout')
 @login_required
 def logout():
@@ -153,12 +166,14 @@ def logout():
     return redirect(url_for('get_projects'))
 
 
+# ? Routing to direct the user to the create projet page.
 @app.route('/add_project')
 @login_required
 def add_project():
     return render_template('addproject.html', category=mongo.db.category.find(), name=current_user.username)
 
 
+# ? Function to determine if uploaded files are allowed.
 def allowed_image(filename):
     if not "." in filename:
         return False
@@ -169,6 +184,8 @@ def allowed_image(filename):
         return False
 
 
+# ? Route and functions to submit project to Mongo.
+# ? If there are any issues with image supplied, a flash message will appear tell the user where they went wrong.
 @app.route('/insert_project', methods=['GET', 'POST'])
 def insert_project():
     if request.method == "POST":
@@ -196,11 +213,13 @@ def insert_project():
         return redirect(url_for('get_projects'))
 
 
+# ? load the file on its own page if viewed directly (right click > open image in new tab).
 @app.route('/file/<filename>')
 def file(filename):
     return mongo.send_file(filename)
 
 
+# ? Routing and functions to get the project infomation from the database via the project ID
 @app.route('/view_project/<projects_id>')
 def view_project(projects_id):
     the_project = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
@@ -211,6 +230,7 @@ def view_project(projects_id):
                            projects=the_project)
 
 
+# ? Routine and functions to get the project ID form the database and allow the user to edit, provided its their project.
 @app.route('/edit_projects/<projects_id>')
 @login_required
 def edit_projects(projects_id):
@@ -220,6 +240,7 @@ def edit_projects(projects_id):
     return render_template('editproject.html', projects=the_projects, category=mongo.db.category.find(), name=current_user.username)
 
 
+# ? ROuting and functions to update the databae collection with the new information provided
 @app.route('/update_projects/<projects_id>', methods=["POST"])
 def update_projects(projects_id):
     projects = mongo.db.projects
@@ -236,7 +257,7 @@ def update_projects(projects_id):
                     })
     return redirect(url_for('get_projects'))
 
-
+# ? Delete the project from teh database
 @app.route('/delete_project/<projects_id>')
 def delete_project(projects_id):
     mongo.db.projects.remove({'_id': ObjectId(projects_id)})
