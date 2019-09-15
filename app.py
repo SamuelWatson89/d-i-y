@@ -66,9 +66,9 @@ def load_user(user_id):
 # ? Create the form for the login page
 class LoginForm(FlaskForm):
     username = StringField('<h6>Username &#128101;</h6>', validators=[
-                           InputRequired(), Length(min=4, max=15)])
+        InputRequired(), Length(min=4, max=15)])
     password = PasswordField('<h6>Password &#128170;</h6>', validators=[
-                             InputRequired(), Length(min=8, max=80)])
+        InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('<h6>remember me</h6>')
 
 
@@ -77,9 +77,9 @@ class RegisterForm(FlaskForm):
     email = StringField('<h6>Email Address &#128231;</h6> (valid email NOT required)', validators=[InputRequired(), Email(
         message='Invalid email'), Length(max=50)])
     username = StringField('<h6>Username &#128101;</h6> (min 4 charaters)', validators=[
-                           InputRequired(), Length(min=4, max=15)])
+        InputRequired(), Length(min=4, max=15)])
     password = PasswordField('<h6>Password &#128170;</h6> (min 8 charaters)', validators=[
-                             InputRequired(), Length(min=8, max=80)])
+        InputRequired(), Length(min=8, max=80)])
 
 
 # ? Landing page route, get the project from the database and set up pagination for them.
@@ -153,8 +153,8 @@ def signup():
             return render_template('signup.html', form=form)
         else:
             mongo.db.users.insert_one(new_user)
-            flash('Thank you for signing up!')
-            return redirect(url_for('get_projects'))
+            flash('Thank you for signing up! Login with your info to continue.')
+            return redirect(url_for('login'))
     return render_template('signup.html', form=form)
 
 
@@ -240,22 +240,41 @@ def edit_projects(projects_id):
     return render_template('editproject.html', projects=the_projects, category=mongo.db.category.find(), name=current_user.username)
 
 
-# ? ROuting and functions to update the databae collection with the new information provided
-@app.route('/update_projects/<projects_id>', methods=["POST"])
+# ? Routing and functions to update the databae collection with the new information provided
+@app.route('/update_projects/<projects_id>', methods=["GET", "POST"])
 def update_projects(projects_id):
-    projects = mongo.db.projects
-    projects.update({'_id': ObjectId(projects_id)},
-                    {
-                    'title': request.form.get('title'),
-                    'creator': request.form.get('creator'),
-                    'description': request.form.get('description'),
-                    'category': request.form.get('category'),
-                    'project_image_name': request.form.get('project_image_name'),
-                    'materials': request.form.get('materials'),
-                    'steps': request.form.get('steps'),
-                    'experience': request.form.get('experience')
-                    })
+    if request.method == "POST":
+        if request.files:
+            project_image = request.files['project_image']
+
+            if project_image.filename == "":
+                print("Image must have a name")
+                flash("Image must have a name")
+                return redirect(url_for('edit_projects'))
+
+            if not allowed_image(project_image.filename):
+                print("That image extension is not allawed")
+                flash("That image extension is not allawed")
+                return redirect(url_for('edit_projects'))
+
+            else:
+                filename = secure_filename(project_image.filename)
+                mongo.save_file(project_image.filename, project_image)
+
+        projects = mongo.db.projects
+        projects.update({'_id': ObjectId(projects_id)},
+                        {
+                        'title': request.form.get('title'),
+                        'creator': request.form.get('creator'),
+                        'description': request.form.get('description'),
+                        'category': request.form.get('category'),
+                        'project_image_name': request.form.get('project_image_name'),
+                        'materials': request.form.get('materials'),
+                        'steps': request.form.get('steps'),
+                        'experience': request.form.get('experience')
+                        })
     return redirect(url_for('get_projects'))
+
 
 # ? Delete the project from teh database
 @app.route('/delete_project/<projects_id>')
