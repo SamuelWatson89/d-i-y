@@ -1,11 +1,15 @@
 # DIY Catalogue
 
-D-I-Y is a online catalogue of home crafts and creations, with step by step tutorials on how to create differnet items in and around the home, or even something to better yourself.
+D-I-Y is a online catalogue of home crafts and creations, with step by step tutorials on how to create different items in and around the home, or even something to better yourself.
 It will feature unique user logins and editable step by step guides.
 
 ## UX
 
-Coming Soon
+The purpose of this project is to provide a place for creative types and diy enthusiasts to share they d-iy projects with other people. Allowing people to see their work and create along with the creator and achieve their own tak eon the project submitted by someone else.
+
+[Part 1](doc/part1.jpg)
+[Part 2](doc/part2.jpg)
+[Part 3](doc/part3.jpg)
 
 ## Features
 
@@ -65,7 +69,7 @@ Coming Soon.
 
 ## Deployment
 
-Project was deployed with Heroku Platform, version control manged by GitHub, ensuring there are no development tools or processes running.
+Project was deployed with Heroku Platform, version control manged by GitHub, ensuring there are no development tools or processes running on the live version of the app.
 
 To run this project locally:
 
