@@ -28,11 +28,12 @@
                     <li><a href="{{ url_for('add_project') }}">Submit Project</a></li>
                 </ul>
                 <ul class="right hide-on-med-and-down">
-                    <li><a href=""><i class="material-icons left">person</i>{{name.username}}</a>
+                    <li><a href="{{ url_for('view_profile', user_id=name._id) }}"><i
+                                class="material-icons left">person</i>{{name.username}}</a>
                     </li>
                 </ul>
                 {% else %}
-                <ul class="right hide-on-med-and-down">
+                <ul class=" right hide-on-med-and-down">
                     <li><a href="{{ url_for('login') }}">Login</a></li>
                     <li><a href="{{ url_for('signup') }}">Sign Up!</a></li>
                 </ul>

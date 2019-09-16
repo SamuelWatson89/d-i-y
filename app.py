@@ -208,8 +208,10 @@ def insert_project():
 
             projects = mongo.db.projects
             projects.insert_one(request.form.to_dict())
+
         flash(
             "AWESOME! You just submitted your project!")
+
         return redirect(url_for('get_projects'))
 
 
@@ -236,8 +238,10 @@ def view_project(projects_id):
 def edit_projects(projects_id):
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     all_categories = mongo.db.category.find()
-
-    return render_template('editproject.html', projects=the_projects, category=mongo.db.category.find(), name=current_user.username)
+    return render_template('editproject.html',
+                           projects=the_projects,
+                           category=all_categories,
+                           name=current_user.username)
 
 
 # ? Routing and functions to update the databae collection with the new information provided
@@ -250,12 +254,12 @@ def update_projects(projects_id):
             if project_image.filename == "":
                 print("Image must have a name")
                 flash("Image must have a name")
-                return redirect(url_for('edit_projects'))
+                return redirect(url_for('get_projects'))
 
             if not allowed_image(project_image.filename):
                 print("That image extension is not allawed")
                 flash("That image extension is not allawed")
-                return redirect(url_for('edit_projects'))
+                return redirect(url_for('get_projects'))
 
             else:
                 filename = secure_filename(project_image.filename)
@@ -268,7 +272,7 @@ def update_projects(projects_id):
                         'creator': request.form.get('creator'),
                         'description': request.form.get('description'),
                         'category': request.form.get('category'),
-                        'project_image_name': request.form.get('project_image_name'),
+                        'project_image_name': request.files.get('project_image_name'),
                         'materials': request.form.get('materials'),
                         'steps': request.form.get('steps'),
                         'experience': request.form.get('experience')
@@ -276,11 +280,22 @@ def update_projects(projects_id):
     return redirect(url_for('get_projects'))
 
 
-# ? Delete the project from teh database
+# ? Delete the project from the database
 @app.route('/delete_project/<projects_id>')
 def delete_project(projects_id):
     mongo.db.projects.remove({'_id': ObjectId(projects_id)})
     return redirect(url_for('get_projects'))
+
+
+# ? User profile page
+@app.route('/view_profile/<user_id>')
+def view_profile(user_id):
+    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    users_projects = mongo.db.projects.find()
+    return render_template('userprofile.html',
+                           name=current_user.username,
+                           user=user,
+                           users_projects=users_projects)
 
 
 if __name__ == '__main__':
