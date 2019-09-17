@@ -198,8 +198,8 @@ def insert_project():
                 return redirect(url_for('add_project'))
 
             if not allowed_image(project_image.filename):
-                print("That image extension is not allawed")
-                flash("That image extension is not allawed")
+                print("That image extension is not allowed")
+                flash("That image extension is not allowed")
                 return redirect(url_for('add_project'))
 
             else:
@@ -254,30 +254,30 @@ def update_projects(projects_id):
             if project_image.filename == "":
                 print("Image must have a name")
                 flash("Image must have a name")
-                return redirect(url_for('get_projects'))
+                return redirect(url_for('edit_projects', projects_id=projects_id))
 
             if not allowed_image(project_image.filename):
-                print("That image extension is not allawed")
-                flash("That image extension is not allawed")
-                return redirect(url_for('get_projects'))
+                print("That image extension is not allowed")
+                flash("That image extension is not allowed")
+                return redirect(url_for('edit_projects', projects_id=projects_id))
 
             else:
                 filename = secure_filename(project_image.filename)
                 mongo.save_file(project_image.filename, project_image)
 
-        projects = mongo.db.projects
-        projects.update({'_id': ObjectId(projects_id)},
-                        {
-                        'title': request.form.get('title'),
-                        'creator': request.form.get('creator'),
-                        'description': request.form.get('description'),
-                        'category': request.form.get('category'),
-                        'project_image_name': request.files.get('project_image_name'),
-                        'materials': request.form.get('materials'),
-                        'steps': request.form.get('steps'),
-                        'experience': request.form.get('experience')
-                        })
-    return redirect(url_for('get_projects'))
+            projects = mongo.db.projects
+            projects.update({'_id': ObjectId(projects_id)},
+                            {
+                            'title': request.form.get('title'),
+                            'creator': request.form.get('creator'),
+                            'description': request.form.get('description'),
+                            'category': request.form.get('category'),
+                            'project_image_name': request.files.get('project_image'),
+                            'materials': request.form.get('materials'),
+                            'steps': request.form.get('steps'),
+                            'experience': request.form.get('experience')
+                            })
+        return redirect(url_for('get_projects'))
 
 
 # ? Delete the project from the database
