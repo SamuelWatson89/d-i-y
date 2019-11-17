@@ -3,28 +3,42 @@
 
 <div class="row">
     <div class="col s12">
-        <h2>{{projects.title}}</h2>
-    </div>
-</div>
+        <div class="card">
+            <div class="card-content black-text">
+                <div class="row">
+                    <div class="col s12 m7">
+                        <span class="card-title">{{projects.title}}</span>
+                        <p>
+                            Project by {{projects.creator}}
+                        </p>
+                        <p>
+                            {{projects.category}} | {{projects.experience}}
+                        </p>
 
-<div class="row">
-    <div class="col s12 m5">
-        <h4>Project by {{projects.creator}}</h4>
+                        <hr>
 
-        <h6>{{projects.category}} | {{projects.experience}} </h6>
+                        <p>
+                            {{projects.description}}
+                        </p>
+                    </div>
 
-        {% if current_user.is_authenticated %}
-        {% if current_user.username.username == projects.creator %}
-        <div class="row">
-            <div class="col s12">
-                <p>
-                    <a href="{{url_for('edit_projects', projects_id=projects._id)}}"
-                        class="waves-effect waves-light btn-small blue darken-3">Edit</a>
+                    <div class="col s12 m5">
+                        <img class="responsive-img" src="{{url_for('file', filename=projects['project_image_name'])}}"
+                            alt="{{projects.project_image_name}}" width="400">
+                    </div>
+                </div>
+            </div>
 
-                    <a class="waves-effect waves-red btn-small red darken-3 modal-trigger" href="#delete">Delete
-                        Project</a><br />
-                    <small>(Only you can see this, {{projects.creator}}!)</small>
-                </p>
+            {% if current_user.is_authenticated %}
+            {% if current_user.username.username == projects.creator %}
+            <div class="card-action">
+                <a href="{{url_for('edit_projects', projects_id=projects._id)}}"
+                    class="waves-effect waves-light btn-small blue darken-3">Edit</a>
+
+                <a class="waves-effect waves-red btn-small red darken-3 modal-trigger" href="#delete">Delete
+                    Project</a><br />
+                <small>(Only you can see this, {{projects.creator}}!)</small>
+
 
                 <div id="delete" class="modal">
                     <div class="modal-content center-align">
@@ -36,27 +50,15 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
+            {% endif %}
         </div>
-        {% endif %}
-        {% endif %}
-    </div>
-
-    <div class="col s12 m7">
-        <img class="responsive-img" src="{{url_for('file', filename=projects['project_image_name'])}}"
-            alt="{{projects.project_image_name}}" width="400">
-    </div>
-</div>
-
-
-<div class="row">
-    <div class="col s12">
-        <p>{{projects.description}}</p>
     </div>
 </div>
 
 <div class="row">
     <div class="col s12">
-        <p>{{projects.steps}}</p>
+        '{{ projects.steps }}
     </div>
 </div>
 
