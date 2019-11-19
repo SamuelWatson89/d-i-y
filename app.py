@@ -11,6 +11,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+import hashlib
 
 app = Flask(__name__)
 load_dotenv()
@@ -203,8 +204,13 @@ def insert_project():
                 return redirect(url_for('add_project'))
 
             else:
-                filename = secure_filename(project_image.filename)
-                mongo.save_file(project_image.filename, project_image)
+                split = project_image.filename.rsplit(".", 1)
+                temp_name = split[0]
+                ext = "." + split[1]
+                hashed_name = hashlib.md5(temp_name.encode())
+                hashed_file_name = hashed_name.hexdigest() + ext
+                filename = secure_filename(hashed_file_name)
+                mongo.save_file(filename, project_image)
 
             projects = mongo.db.projects
             projects.insert_one(request.form.to_dict())
