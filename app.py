@@ -238,10 +238,10 @@ def view_project(projects_id):
     the_project = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     if current_user.is_authenticated:
         return render_template('viewproject.html',
-                                projects=the_project, 
-                                name=current_user.username)
+                               projects=the_project,
+                               name=current_user.username)
     return render_template('viewproject.html',
-                            projects=the_project)
+                           projects=the_project)
 
 
 # ? Routine and functions to get the project ID form the database and allow the user to edit, provided its their project.
