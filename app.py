@@ -212,15 +212,12 @@ def insert_project():
                 hashed_file_name = hashed_name.hexdigest() + ext
 
                 filename = secure_filename(hashed_file_name)
-
-                save_image = mongo.save_file(filename, project_image)
+                mongo.save_file(filename, project_image)
 
             projects = mongo.db.projects
-
             project_dict = request.form.to_dict()
             update_image_name = {'project_image_name': filename}
             project_dict.update(update_image_name)
-
             projects.insert_one(project_dict)
 
         flash(
