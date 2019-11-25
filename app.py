@@ -207,13 +207,21 @@ def insert_project():
                 split = project_image.filename.rsplit(".", 1)
                 temp_name = split[0]
                 ext = "." + split[1]
+
                 hashed_name = hashlib.md5(temp_name.encode())
                 hashed_file_name = hashed_name.hexdigest() + ext
+
                 filename = secure_filename(hashed_file_name)
-                mongo.save_file(filename, project_image)
+
+                save_image = mongo.save_file(filename, project_image)
 
             projects = mongo.db.projects
-            projects.insert_one(request.form.to_dict())
+
+            project_dict = request.form.to_dict()
+            update_image_name = {'project_image_name': filename}
+            project_dict.update(update_image_name)
+
+            projects.insert_one(project_dict)
 
         flash(
             "AWESOME! You just submitted your project!")
@@ -233,9 +241,10 @@ def view_project(projects_id):
     the_project = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     if current_user.is_authenticated:
         return render_template('viewproject.html',
-                               projects=the_project, name=current_user.username)
+                                projects=the_project, 
+                                name=current_user.username)
     return render_template('viewproject.html',
-                           projects=the_project)
+                            projects=the_project)
 
 
 # ? Routine and functions to get the project ID form the database and allow the user to edit, provided its their project.
