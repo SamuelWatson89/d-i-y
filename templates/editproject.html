@@ -1,140 +1,162 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<h3>Edit your project</h3>
-<div class="row">
-    <form action="{{ url_for('update_projects', projects_id=projects._id) }}" method="POST" class="col s12"
-        enctype="multipart/form-data">
-        <div class="row">
-            <div class="s12">
-                <h4>So {{ name.username }}, its time to make some changes?</h4>
-            </div>
-
-            <div class="input-field col s12 m4">
-                <i class="material-icons prefix">account_box</i>
-                <input id="creator" name="creator" type="text" class="validate" value="{{ name.username }}" required>
-                <label for="creator">{{projects.creator}}</label>
-            </div>
-
-            <div class="input-field col s12 m4">
-                <i class="material-icons prefix">title</i>
-                <input id="title" name="title" type="text" class="validate" value="{{projects.title}}" required>
-                <label for="title">{{projects.title}}</label>
-            </div>
-
-            <div class="input-field col s12 m4">
-                <i class="material-icons prefix">view_list</i>
-                <select id="category" name="category" required>
-                    <option value="{{projects.category}}" selected>{{projects.category}}</option>
-                    {% for cat in category %}
-                    <option value="{{cat.category_name}}">{{cat.category_name}}</option>
-                    {% endfor %}
-                </select>
-                <label>Task Category</label>
-            </div>
+<div class="container"> 
+    <div class="row">
+        <h3>Edit your project</h3>
+        <div class="s12">
+            <h4>So {{ name.username }}, its time to make some changes?</h4>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="input-field col s12 m9">
-                <i class="material-icons prefix">subject</i>
-                <textarea name="description" id="description" class="materialize-textarea"
-                    value="{{projects.description}}">Project Description</textarea>
-                <label for="description">Description of project</label>
-            </div>
+    <div class="row">
+        <div class="card">
+            <div class="card-content">
+                <div class="row">
+                    <form action="{{ url_for('update_projects', projects_id=projects._id) }}" method="POST" class="col s12"
+                        enctype="multipart/form-data">
+                        <div class="row">
 
-            <div class="col s12 m3">
-                <p>
-                    <label>
-                        {% if projects.experience == "Beginner" %}
-                        <input class="with-gap" name="experience" type="radio" value="Beginner" checked />
-                        {% else %}
-                        <input class="with-gap" name="experience" type="radio" value="Beginner" />
-                        {% endif %}
-                        <span>Beginner</span>
-                    </label>
-                </p>
 
-                <p>
-                    <label>
-                        {% if projects.experience == "Intermediate" %}
-                        <input class="with-gap" name="experience" type="radio" value="Intermediate" checked />
-                        {% else %}
-                        <input class="with-gap" name="experience" type="radio" value="Intermediate" />
-                        {% endif %}
-                        <span>Intermediate</span>
-                    </label>
-                </p>
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">account_box</i>
+                                <input id="creator" name="creator" type="text" class="validate" value="{{ name.username }}"
+                                    required readonly>
+                                <label for="creator">{{projects.creator}}</label>
+                            </div>
 
-                <p>
-                    <label>
-                        {% if projects.experience == "Advance" %}
-                        <input class="with-gap" name="experience" type="radio" value="Advance" checked />
-                        {% else %}
-                        <input class="with-gap" name="experience" type="radio" value="Advance" />
-                        {% endif %}
-                        <span>Advance</span>
-                    </label>
-                </p>
-            </div>
-        </div>
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">title</i>
+                                <input id="title" name="title" type="text" class="validate" value="{{projects.title}}" required>
+                                <label for="title">{{projects.title}}</label>
+                            </div>
 
-        <div class="row">
-            <div class="col s12 m4">
-                <img class="responsive-img" src="{{url_for('file', filename=projects['project_image_name'])}}"
-                    alt="{{projects.project_image_name}}" width="300">
-            </div>
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">view_list</i>
+                                <select id="category" name="category" required>
+                                    <option value="{{projects.category}}" selected>{{projects.category}}</option>
+                                    {% for cat in category %}
+                                    <option value="{{cat.category_name}}">{{cat.category_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <label>Task Category</label>
+                            </div>
+                        </div>
 
-            <div class="col s12 m4">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                {% for message in messages %}
-                <div class="row s8 red lighten-2 valign-center">
-                    <p class="center-align">
-                        {{ message }}
-                    </p>
+                        <div class="row">
+                            <div class="input-field col s12 m9">
+                                <i class="material-icons prefix">subject</i>
+                                <textarea name="description" id="description" class="materialize-textarea"
+                                    value="{{projects.description}}">Project Description</textarea>
+                                <label for="description">Description of project</label>
+                            </div>
+
+                            <div class="col s12 m3">
+                                <p>
+                                    <label>
+                                        {% if projects.experience == "Beginner" %}
+                                        <input class="with-gap" name="experience" type="radio" value="Beginner" checked />
+                                        {% else %}
+                                        <input class="with-gap" name="experience" type="radio" value="Beginner" />
+                                        {% endif %}
+                                        <span>Beginner</span>
+                                    </label>
+                                </p>
+
+                                <p>
+                                    <label>
+                                        {% if projects.experience == "Intermediate" %}
+                                        <input class="with-gap" name="experience" type="radio" value="Intermediate" checked />
+                                        {% else %}
+                                        <input class="with-gap" name="experience" type="radio" value="Intermediate" />
+                                        {% endif %}
+                                        <span>Intermediate</span>
+                                    </label>
+                                </p>
+
+                                <p>
+                                    <label>
+                                        {% if projects.experience == "Advance" %}
+                                        <input class="with-gap" name="experience" type="radio" value="Advance" checked />
+                                        {% else %}
+                                        <input class="with-gap" name="experience" type="radio" value="Advance" />
+                                        {% endif %}
+                                        <span>Advance</span>
+                                    </label>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12 m4">
+                                <img class="responsive-img z-depth-1"
+                                    src="{{url_for('file', filename=projects['project_image_name'])}}"
+                                    alt="{{projects.project_image_name}}" width="300">
+                            </div>
+
+                            <div class="col s12 m4">
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="row s8 red lighten-2 valign-center">
+                                    <p class="center-align">
+                                        {{ message }}
+                                    </p>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+
+                                <div class="file-field input-field">
+                                    <div class="btn amber accent-4">
+                                        <span>File</span>
+                                        <input type="file" id="project_image" name="project_image"
+                                            value="{{projects.project_image_name}}">
+                                    </div>
+
+                                    <div class=" file-path-wrapper">
+                                        <input class="file-path validate" type="text" id="project_image" name="project_image"
+                                            value="{{projects.project_image_name}}">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="input-field col s12 m4">
+                                <i class="material-icons prefix">build</i>
+                                <div id="materials" name="materials" class="chips chips-placeholder"></div>
+                            </div>
+                        </div>
+
+                        <div class="row" id="stepsInput">
+                            {% for key, value in projects.steps.items() %}
+                            <p>Step {{ loop.index }}</p>
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">linear_scale</i>
+                                <textarea name="{{ key }}" id="step" class="materialize-textarea" value="{{ value }}"
+                                    required>{{value}}</textarea>
+                                <label for="step">Steps</label>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="row">
+                            <a class="btn waves-effect waves-light amber accent-4" name="add_step"
+                                onclick="addStep('stepsInput')">Add
+                                Step
+                                <i class="material-icons right">add</i>
+                            </a>
+                        </div>
+
+                        <div class="row">
+                            <button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Save
+                                <i class="material-icons right">add</i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                {% endfor %}
-                {% endif %}
-                {% endwith %}
-
-                <div class="file-field input-field">
-                    <div class="btn amber accent-4">
-                        <span>File</span>
-                        <input type="file" id="project_image" name="project_image"
-                            value="{{projects.project_image_name}}">
-                    </div>
-
-                    <div class=" file-path-wrapper">
-                        <input class="file-path validate" type="text" id="project_image" name="project_image"
-                            value="{{projects.project_image_name}}">
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="input-field col s12 m4">
-                <i class="material-icons prefix">build</i>
-                <div id="materials" name="materials" class="chips chips-placeholder"></div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="input-field col s12">
-                <i class="material-icons prefix">linear_scale</i>
-                <textarea name="steps" id="steps" class="materialize-textarea" value="{{projects.steps}}"
-                    required>{{projects.steps}}</textarea>
-                <label for="linear_scale">Steps</label>
-            </div>
-        </div>
-
-        <!--TODO: Add functionality to dynamically add another input. May have to change to WTForms-->
-
-        <div class="row">
-            <button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Save
-                <i class="material-icons right">add</i>
-            </button>
-        </div>
-    </form>
+    </div>
 </div>
 
 {% endblock %}

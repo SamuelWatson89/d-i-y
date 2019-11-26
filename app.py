@@ -137,6 +137,9 @@ def login():
 # ? If the details input already exist in the database, a flash message is shown with the error.
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    if current_user.is_authenticated:  
+        return redirect(url_for('add_project'))
+
     form = RegisterForm()
     if form.validate_on_submit():
         hashed_password = generate_password_hash(
@@ -156,6 +159,7 @@ def signup():
             mongo.db.users.insert_one(new_user)
             flash('Thank you for signing up! Login with your info to continue.')
             return redirect(url_for('login'))
+     
     return render_template('signup.html', form=form)
 
 
@@ -194,12 +198,10 @@ def insert_project():
             project_image = request.files['project_image']
 
             if project_image.filename == "":
-                print("Image must have a name")
                 flash("Image must have a name")
                 return redirect(url_for('add_project'))
 
             if not allowed_image(project_image.filename):
-                print("That image extension is not allowed")
                 flash("That image extension is not allowed")
                 return redirect(url_for('add_project'))
 
@@ -268,12 +270,10 @@ def update_projects(projects_id):
             project_image = request.files['project_image']
 
             if project_image.filename == "":
-                print("Image must have a name")
                 flash("Image must have a name")
                 return redirect(url_for('edit_projects', projects_id=projects_id))
 
             if not allowed_image(project_image.filename):
-                print("That image extension is not allowed")
                 flash("That image extension is not allowed")
                 return redirect(url_for('edit_projects', projects_id=projects_id))
 

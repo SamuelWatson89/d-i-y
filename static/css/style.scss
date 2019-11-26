@@ -13,10 +13,6 @@ main {
 //? Font page styling
 
 .front-page-container {
-    h2 {
-        color: #263238;
-    }
-
     .hoverable:hover {
         box-shadow: 0 8px 17px 0 #26323833, 0 6px 20px 0 #26323833;
     }
@@ -27,6 +23,12 @@ main {
             background: linear-gradient(90deg, rgba(255, 171, 0, 1) 25%, rgba(255, 171, 0, 0.2553396358543417) 100%);
         }
     }
+}
+
+.front-page-header {
+    padding: 50px 0px 100px 0px;
+    background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 85%);
 }
 
 .pagination {

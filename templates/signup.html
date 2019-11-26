@@ -11,44 +11,46 @@
     }
 </style>
 
-<div class="row">
-    <div class="col s12 l6 offset-l3 center-align">
-        <div class="card account-form">
-            <div class="card-content">
-                <span class="card-title">Create a new account!</span>
+<div class="container"> 
+    <div class="row">
+        <div class="col s12 l6 offset-l3 center-align">
+            <div class="card account-form">
+                <div class="card-content">
+                    <span class="card-title">Create a new account!</span>
 
-                <p>It's free, and won't bite! &#127828;</p>
+                    <p>It's free, and won't bite! &#127828;</p>
 
-                <form method="POST" action="/signup">
-                    <div class="row">
-                        <div class="input-field col s10 offset-s1">
-                            {% with messages = get_flashed_messages() %}
-                            {% if messages %}
-                            {% for message in messages %}
-                            <div class="row white-text red darken-1">
-                                <div class="col center-align">
-                                    <p>{{ message }}</p>
+                    <form method="POST" action="/signup">
+                        <div class="row">
+                            <div class="input-field col s10 offset-s1">
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="row white-text red darken-1">
+                                    <div class="col center-align">
+                                        <p>{{ message }}</p>
+                                    </div>
                                 </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+                                <!-- <input id="username" name="username" type="text" class="validate" required>
+                            <label class="active" for="username">Enter Your Username</label> -->
+                                {{ form.hidden_tag() }}
+                                {{ wtf.form_field(form.username) }}
+                                {{ wtf.form_field(form.email) }}
+                                {{ wtf.form_field(form.password) }}
                             </div>
-                            {% endfor %}
-                            {% endif %}
-                            {% endwith %}
-                            <!-- <input id="username" name="username" type="text" class="validate" required>
-                        <label class="active" for="username">Enter Your Username</label> -->
-                            {{ form.hidden_tag() }}
-                            {{ wtf.form_field(form.username) }}
-                            {{ wtf.form_field(form.email) }}
-                            {{ wtf.form_field(form.password) }}
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="s-12">
-                            <button class="waves-effect waves-light btn-large amber accent-4" type="submit"
-                                name="submit">Sign up</button>
+                        <div class="row">
+                            <div class="s-12">
+                                <button class="waves-effect waves-light btn-large amber accent-4" type="submit"
+                                    name="submit">Sign up</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
