@@ -30,8 +30,7 @@ main {
 
 .front-page-header {
   padding: 50px 0px 100px 0px;
-  background: -webkit-gradient(linear, left top, right top, from(#d53369), to(#daae51));
-  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+  background-image: linear-gradient(135deg, #FD6E6A 10%, #FFC600 100%);
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 85%);
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 85%);
 }
