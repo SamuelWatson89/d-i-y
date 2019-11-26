@@ -56,10 +56,18 @@
     </div>
 </div>
 
+{% for key, value in projects.steps.items() %}
 <div class="row">
     <div class="col s12">
-        {{ projects.step1 }}<br />
+        <div class="card">
+            <div class="card-content black-text">
+                <span class="card-title">Step {{ loop.index }}</span>
+
+                <p>{{value}}</p>
+            </div>
+        </div>
     </div>
 </div>
+{% endfor %}
 
 {% endblock %}

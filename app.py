@@ -217,7 +217,11 @@ def insert_project():
             projects = mongo.db.projects
             project_dict = request.form.to_dict()
             update_image_name = {'project_image_name': filename}
+
+            project_steps = {k:v for (k,v) in project_dict.items() if 'step' in k}
+
             project_dict.update(update_image_name)
+            project_dict['steps'] = project_steps
             projects.insert_one(project_dict)
 
         flash(
