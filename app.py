@@ -219,7 +219,6 @@ def insert_project():
             projects = mongo.db.projects
             project_dict = request.form.to_dict()
             update_image_name = {'project_image_name': filename}
-
             project_steps = {k:v for (k,v) in project_dict.items() if 'step' in k}
 
             project_dict.update(update_image_name)
@@ -267,31 +266,26 @@ def edit_projects(projects_id):
 def update_projects(projects_id):
     if request.method == "POST":
         if request.files:
-            project_image = request.files['project_image']
-
-            if project_image.filename == "":
-                flash("Image must have a name")
-                return redirect(url_for('edit_projects', projects_id=projects_id))
-
-            if not allowed_image(project_image.filename):
-                flash("That image extension is not allowed")
-                return redirect(url_for('edit_projects', projects_id=projects_id))
-
-            else:
-                filename = secure_filename(project_image.filename)
-                mongo.save_file(project_image.filename, project_image)
+            projectTitle = request.form.get('title')
+            projectCreator = request.form.get('creator')
+            projectDescription = request.form.get('description')
+            projectCatagory = request.form.get('category')
+            projectMaterials = request.form.get('materials')
+            projectSteps = {k:v for (k,v) in request.form.items() if 'step' in k}
+            projectExperience = request.form.get('experience')
 
             projects = mongo.db.projects
-            projects.update({'_id': ObjectId(projects_id)},
+            projects.update_one({'_id': ObjectId(projects_id)},
                             {
-                            'title': request.form.get('title'),
-                            'creator': request.form.get('creator'),
-                            'description': request.form.get('description'),
-                            'category': request.form.get('category'),
-                            'project_image_name': request.files.get('project_image'),
-                            'materials': request.form.get('materials'),
-                            'steps': request.form.get('steps'),
-                            'experience': request.form.get('experience')
+                                '$set': {
+                                    'title': projectTitle,
+                                    'creator': projectCreator,
+                                    'description': projectDescription,
+                                    'category': projectCatagory,
+                                    'materials': projectMaterials,
+                                    'steps': projectSteps,
+                                    'experience': projectExperience
+                                }
                             })
         return redirect(url_for('get_projects'))
 

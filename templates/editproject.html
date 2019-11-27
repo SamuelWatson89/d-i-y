@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container"> 
+<div class="container">
     <div class="row">
         <h3>Edit your project</h3>
         <div class="s12">
@@ -26,7 +26,8 @@
 
                             <div class="input-field col s12 m4">
                                 <i class="material-icons prefix">title</i>
-                                <input id="title" name="title" type="text" class="validate" value="{{projects.title}}" required>
+                                <input id="title" name="title" type="text" class="validate" value="{{projects.title}}"
+                                    required>
                                 <label for="title">{{projects.title}}</label>
                             </div>
 
@@ -65,7 +66,8 @@
                                 <p>
                                     <label>
                                         {% if projects.experience == "Intermediate" %}
-                                        <input class="with-gap" name="experience" type="radio" value="Intermediate" checked />
+                                        <input class="with-gap" name="experience" type="radio" value="Intermediate"
+                                            checked />
                                         {% else %}
                                         <input class="with-gap" name="experience" type="radio" value="Intermediate" />
                                         {% endif %}
@@ -123,7 +125,9 @@
 
                             <div class="input-field col s12 m4">
                                 <i class="material-icons prefix">build</i>
-                                <div id="materials" name="materials" class="chips chips-placeholder"></div>
+                                <div class="chips">
+                                    <input name="materials" id="materials" width="100%" value="{{ projects.materials }}">
+                                </div>
                             </div>
                         </div>
 
