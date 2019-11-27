@@ -268,6 +268,7 @@ def edit_projects(projects_id):
 def update_projects(projects_id):
     if request.method == "POST":
         if request.files:
+
             projectTitle = request.form.get('title')
             projectCreator = request.form.get('creator')
             projectDescription = request.form.get('description')
@@ -277,17 +278,15 @@ def update_projects(projects_id):
             projectExperience = request.form.get('experience')
 
             projects = mongo.db.projects
-            projects.update_one({'_id': ObjectId(projects_id)},
+            projects.update_many({'_id': ObjectId(projects_id)},
                             {
-                                '$set': {
-                                    'title': projectTitle,
-                                    'creator': projectCreator,
-                                    'description': projectDescription,
-                                    'category': projectCatagory,
-                                    'materials': projectMaterials,
-                                    'steps': projectSteps,
-                                    'experience': projectExperience
-                                }
+                                'title': projectTitle,
+                                'creator': projectCreator,
+                                'description': projectDescription,
+                                'category': projectCatagory,
+                                'materials': projectMaterials,
+                                'steps': projectSteps,
+                                'experience': projectExperience
                             })
         return redirect(url_for('get_projects'))
 
