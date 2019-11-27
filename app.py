@@ -220,9 +220,11 @@ def insert_project():
             project_dict = request.form.to_dict()
             update_image_name = {'project_image_name': filename}
             project_steps = {k:v for (k,v) in project_dict.items() if 'step' in k}
+            project_materials = {k:v for (k,v) in project_dict.items() if 'material' in k}
 
             project_dict.update(update_image_name)
             project_dict['steps'] = project_steps
+            project_dict['materials'] = project_materials
             projects.insert_one(project_dict)
 
         flash(

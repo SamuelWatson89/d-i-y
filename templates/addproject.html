@@ -1,137 +1,158 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container"> 
+<div class="container">
     <div class="row">
         <h3>Add a project</h3>
 
         <h4>Hi {{ name.username }}! We cannot wait to see what you've made!</h4>
     </div>
 
+
     <div class="row">
-        <div class="card">
-            <div class="card-content">
-                <div class="row">
-                    <form action="{{ url_for('insert_project') }}" method="POST" class="col s12" enctype="multipart/form-data">
-
-                        <div class="input-field col s4">
-                            <i class="material-icons prefix">account_box</i>
-                            <input id="creator" name="creator" type="text" class="validate" value="{{ name.username }}" required
-                                readonly>
-                            <label for="creator">Creator's name(You)</label>
-                        </div>
-
-                        <div class="input-field col s12 m4">
-                            <i class="material-icons prefix">title</i>
-                            <input id="title" name="title" type="text" class="validate" required>
-                            <label for="title">Project name</label>
-                        </div>
-
-                        <div class="input-field col s12 m4">
-                            <i class="material-icons prefix">view_list</i>
-                            <select id="category" name="category" required>
-                                <option value="" disabled selected>Choose Category</option>
-                                {% for cat in category %}
-                                <option value="{{cat.category_name}}">{{cat.category_name}}</option>
-                                {% endfor %}
-                            </select>
-                            <label for="category">Task Category</label>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">subject</i>
-                                <textarea name="description" id="description" class="materialize-textarea" rows="10"
-                                    required></textarea>
-                                <label for="description">Description of project</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            {% with messages = get_flashed_messages() %}
-                            {% if messages %}
-                            {% for message in messages %}
-                            <div class="row red lighten-2 valign-center">
-                                <p class="center-align">
-                                    {{ message }}
-                                </p>
-                            </div>
-                            {% endfor %}
-                            {% endif %}
-                            {% endwith %}
-                            <div class="file-field input-field">
-                                <div class="btn amber accent-4">
-                                    <span>File</span>
-                                    <input type="file" id="project_image" name="project_image" required>
+        <form action="{{ url_for('insert_project') }}" method="POST" class="col s12" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col s12 m8">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col input-field">
+                                    <i class="material-icons prefix">title</i>
+                                    <input id="title" name="title" type="text" class="validate" required>
+                                    <label for="title">Project name</label>
                                 </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text" id="project_image_name"
-                                        name="project_image_name" placeholder="Upload finished project image">
+
+                                <div class="col input-field">
+                                    <i class="material-icons prefix">view_list</i>
+                                    <select id="category" name="category" required>
+                                        <option value="" disabled selected>Choose Category</option>
+                                        {% for cat in category %}
+                                        <option value="{{cat.category_name}}">{{cat.category_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label for="category">Task Category</label>
+                                </div>
+
+                                <div class="input-field col">
+                                    <i class="material-icons prefix">subject</i>
+                                    <textarea name="description" id="description" class="materialize-textarea" rows="10"
+                                        required></textarea>
+                                    <label for="description">Description of project</label>
+                                </div>
+
+                                <div class="row">
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    {% for message in messages %}
+                                    <div class="row red lighten-2 valign-center">
+                                        <p class="center-align">
+                                            {{ message }}
+                                        </p>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endwith %}
+                                    <div class="col s12">
+                                        <div class="file-field input-field">
+                                            <div class="btn amber accent-4">
+                                                <span>File</span>
+                                                <input type="file" id="project_image" name="project_image" required>
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate" type="text" id="project_image_name"
+                                                    name="project_image_name" placeholder="Upload finished project image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12">
+                                        <p>
+                                            <label>
+                                                <input class="with-gap" name="experience" type="radio" value="Beginner"
+                                                    checked />
+                                                <span>Beginner</span>
+                                            </label>
+                                        </p>
+
+                                        <p>
+                                            <label>
+                                                <input class="with-gap" name="experience" type="radio"
+                                                    value="Intermediate" />
+                                                <span>Intermediate</span>
+                                            </label>
+                                        </p>
+
+                                        <p>
+                                            <label>
+                                                <input class="with-gap" name="experience" type="radio" value="Advance" />
+                                                <span>Advance</span>
+                                            </label>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="row" id="stepsInput">
+                                    <p>Step 1</p>
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">linear_scale</i>
+                                        <textarea name="step1" id="step" class="materialize-textarea" required></textarea>
+                                        <label for="step">Steps to make project</label>
+                                    </div>
+
+                                    <div class="col">
+                                        <a class="btn waves-effect waves-light amber accent-4" name="add_step"
+                                            onclick="addStep('stepsInput')">Add
+                                            Step
+                                            <i class="material-icons right">add</i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col s12 m3">
-                                <p>
-                                    <label>
-                                        <input class="with-gap" name="experience" type="radio" value="Beginner" checked />
-                                        <span>Beginner</span>
-                                    </label>
-                                </p>
-
-                                <p>
-                                    <label>
-                                        <input class="with-gap" name="experience" type="radio" value="Intermediate" />
-                                        <span>Intermediate</span>
-                                    </label>
-                                </p>
-
-                                <p>
-                                    <label>
-                                        <input class="with-gap" name="experience" type="radio" value="Advance" />
-                                        <span>Advance</span>
-                                    </label>
-                                </p>
-                            </div>
-
-                            <div class="input-field col s12 m9">
-                                <i class="material-icons prefix">build</i>
-                                <div class="chips">
-                                    <input name="materials" id="materials" placeholder="Materials required" width="100%">
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="row" id="stepsInput">
-                            <p>Step 1</p>
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">linear_scale</i>
-                                <textarea name="step1" id="step" class="materialize-textarea" required></textarea>
-                                <label for="step">Steps to make project</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <a class="btn waves-effect waves-light amber accent-4" name="add_step"
-                                onclick="addStep('stepsInput')">Add
-                                Step
-                                <i class="material-icons right">add</i>
-                            </a>
-                        </div>
-
-                        <div class="row">
-                            <button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Add
-                                Task
-                                <i class="material-icons right">save</i>
-                            </button>
-                        </div>
-
+                    </div>
                 </div>
-                </form>
+
+                <div class="col s12 m4">
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="input-field col">
+                                    <i class="material-icons prefix">account_box</i>
+                                    <input id="creator" name="creator" type="text" class="validate"
+                                        value="{{ name.username }}" required readonly>
+                                    <label for="creator">Creator's name(You)</label>
+                                </div>
+
+                                <div class="row" id="materialsInput">
+                                    <p>Material</p>
+                                    <div class="input-field col">
+                                        <i class="material-icons prefix">linear_scale</i>
+                                        <input name="material1" id="material" type="text" class="validate" required>
+                                        <label for="step">Materials required</label>
+                                    </div>
+                                </div>
+
+                                <a class="btn waves-effect waves-light amber accent-4" name="add_material"
+                                    onclick="addMaterial('materialsInput')">Add
+                                    Material
+                                    <i class="material-icons right">add</i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">Add
+                            Task
+                            <i class="material-icons right">save</i>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 {% endblock %}
