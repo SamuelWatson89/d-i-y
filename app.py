@@ -268,10 +268,8 @@ def edit_projects(projects_id):
 @login_required
 def edit_image(projects_id):
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
-    all_categories = mongo.db.category.find()
     return render_template('editimage.html',
                            projects=the_projects,
-                           category=all_categories,
                            name=current_user.username)
 
 # ? Routing and functions to update the databae collection with the new information provided
@@ -299,23 +297,54 @@ def update_projects(projects_id):
                             'experience': projectExperience
                             }
                         })
-        return redirect(url_for('get_projects'))
+        the_project = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
+        if current_user.is_authenticated:
+            return render_template('viewproject.html',
+                                projects=the_project,
+                                name=current_user.username)
+        return render_template('viewproject.html',
+                            projects=the_project)
+
 
 # ? Routing and functions to update the databae collection with the new information provided
 @app.route('/update_image/<projects_id>', methods=["GET", "POST"])
 def update_image(projects_id):
     if request.method == "POST":
-        
-        projectImage = request.form.get('project_image_name')
+        if request.files:
+            project_image = request.files['project_image']
 
-        projects = mongo.db.projects
-        projects.update_one({'_id': ObjectId(projects_id)},
-                        {
-                            '$set' : {
-                            'project_image_name': projectImage,
-                            }
-                        })
-        return redirect(url_for('get_projects'))
+            if project_image.filename == "":
+                flash("Image must have a name")
+                return redirect(url_for('add_project'))
+
+            if not allowed_image(project_image.filename):
+                flash("That image extension is not allowed")
+                return redirect(url_for('add_project'))
+
+            else:
+                split = project_image.filename.rsplit(".", 1)
+                temp_name = split[0]
+                ext = "." + split[1]
+
+                hashed_name = hashlib.md5(temp_name.encode())
+                hashed_file_name = hashed_name.hexdigest() + ext
+
+                filename = secure_filename(hashed_file_name)
+                mongo.save_file(filename, project_image)
+
+            projects = mongo.db.projects
+            projects.update_one({'_id': ObjectId(projects_id)},
+                            {
+                                '$set' : {
+                                'project_image_name': filename,
+                                }
+                            })
+        the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
+        all_categories = mongo.db.category.find()
+        return render_template('editproject.html',
+                                projects=the_projects,
+                                category=all_categories,
+                                name=current_user.username)
 
 
 # ? Delete the project from the database
