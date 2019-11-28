@@ -1,11 +1,15 @@
 # DIY Catalogue
 
-D-I-Y is a online catalogue of home crafts and creations, with step by step tutorials on how to create different items in and around the home, or even something to better yourself.
-It will feature unique user logins and editable step by step guides.
+D-I-Y is a online catalogue of home crafts, creations lifstyle and heatlh projects, with step by step tutorials on how to create different items in and around the home, or even something to better yourself.
+Featuring unique user logins and editable step by step guides.
 
 ## UX
 
-The purpose of this project is to provide a place for creative types and diy enthusiasts to share they d-iy projects with other people. Allowing people to see their work and create along with the creator and achieve their own tak eon the project submitted by someone else.
+The purpose of this project is to provide a platform for creative, diy and fitness enthusiasts to share their projects with other people. Allowing people to see their work and create things along with the creator, and achieve their own take on the project submitted by someone else.
+
+Allowing users to sign up with an account and submit projects containg difficulty levels, steps by steps instructions, materials needed and a description of what they  have submitted.
+
+Making use of the Flask micro-framework and MongoDB to store information
 
 [Part 1](doc/part1.jpg)
 [Part 2](doc/part2.jpg)
@@ -34,13 +38,13 @@ Delete a project
 
 - Users will have the option to delete their own projects.
 
+User profile
+    - Somewhere users can see content from one user, and somewhere similar the user can see all their projects submitted, to easily manage them.
+
 ### Features Left to Implement
 
 Filtering displayed projects
     - Allow the user to filter the project by category or creator
-
-User profile
-    - Somewhere users can see content from one user, and somewhere similar the user can see all their projects submitted, to easily manage them.
 
 ## Technologies Used
 
@@ -69,7 +73,7 @@ Coming Soon.
 
 ## Deployment
 
-Project was deployed with Heroku Platform, version control manged by GitHub, ensuring there are no development tools or processes running on the live version of the app.
+The project is deployed with Heroku Platform, version control manged by GitHub, ensuring there are no development tools or processes running on the live version of the app.
 
 To run this project locally:
 
