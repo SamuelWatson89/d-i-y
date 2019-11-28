@@ -263,31 +263,58 @@ def edit_projects(projects_id):
                            name=current_user.username)
 
 
+# ? Updsate the project image on its own seperate page.
+@app.route('/edit_image/<projects_id>')
+@login_required
+def edit_image(projects_id):
+    the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
+    all_categories = mongo.db.category.find()
+    return render_template('editimage.html',
+                           projects=the_projects,
+                           category=all_categories,
+                           name=current_user.username)
+
 # ? Routing and functions to update the databae collection with the new information provided
 @app.route('/update_projects/<projects_id>', methods=["GET", "POST"])
 def update_projects(projects_id):
     if request.method == "POST":
-        if request.files:
+        projectTitle = request.form.get('title')
+        projectCreator = request.form.get('creator')
+        projectDescription = request.form.get('description')
+        projectCatagory = request.form.get('category')
+        projectMaterials = {k:v for (k,v) in request.form.items() if 'material' in k}
+        projectSteps = {k:v for (k,v) in request.form.items() if 'step' in k}
+        projectExperience = request.form.get('experience')
 
-            projectTitle = request.form.get('title')
-            projectCreator = request.form.get('creator')
-            projectDescription = request.form.get('description')
-            projectCatagory = request.form.get('category')
-            projectMaterials = request.form.get('materials')
-            projectSteps = {k:v for (k,v) in request.form.items() if 'step' in k}
-            projectExperience = request.form.get('experience')
+        projects = mongo.db.projects
+        projects.update_one({'_id': ObjectId(projects_id)},
+                        {
+                            '$set' : {
+                            'title': projectTitle,
+                            'creator': projectCreator,
+                            'description': projectDescription,
+                            'category': projectCatagory,
+                            'materials': projectMaterials,
+                            'steps': projectSteps,
+                            'experience': projectExperience
+                            }
+                        })
+        return redirect(url_for('get_projects'))
 
-            projects = mongo.db.projects
-            projects.update_many({'_id': ObjectId(projects_id)},
-                            {
-                                'title': projectTitle,
-                                'creator': projectCreator,
-                                'description': projectDescription,
-                                'category': projectCatagory,
-                                'materials': projectMaterials,
-                                'steps': projectSteps,
-                                'experience': projectExperience
-                            })
+# ? Routing and functions to update the databae collection with the new information provided
+@app.route('/update_image/<projects_id>', methods=["GET", "POST"])
+def update_image(projects_id):
+    if request.method == "POST":
+        
+        projectImage = request.form.get('project_image_name')
+
+        projects = mongo.db.projects
+        projects.update_one({'_id': ObjectId(projects_id)},
+                        {
+                            '$set' : {
+                            'project_image_name': projectImage,
+                            }
+                        })
         return redirect(url_for('get_projects'))
 
 
