@@ -1,4 +1,5 @@
-# DIY Catalogue
+# [DIY Catalogue](http://d-i-y.herokuapp.com/)
+
 
 D-I-Y is a online catalogue of home crafts, creations lifstyle and heatlh projects, with step by step tutorials on how to create different items in and around the home, or even something to better yourself.
 Featuring unique user logins and editable step by step guides.
@@ -14,6 +15,8 @@ Making use of the Flask micro-framework and MongoDB to store information
 [Part 1](doc/part1.jpg)
 [Part 2](doc/part2.jpg)
 [Part 3](doc/part3.jpg)
+
+Link to the [Live Site](http://d-i-y.herokuapp.com/)
 
 ## Features
 
@@ -55,7 +58,6 @@ Filtering displayed projects
 [Python](https://www.python.org/)
 [MongoDB](https://www.mongodb.com/)
 
-
 [Material CSS](https://materializecss.com/)
 [Flask](https://flask.palletsprojects.com/en/1.0.x/)
 [Pymongo](https://api.mongodb.com/python/current/)
@@ -75,13 +77,64 @@ Coming Soon.
 
 The project is deployed with Heroku Platform, version control manged by GitHub, ensuring there are no development tools or processes running on the live version of the app.
 
-To run this project locally:
+### To run this project locally
 
-COMING SOON
+- Ensure the following are installed
+
+  - Python 3, programming language
+  - PIP, python package manager
+
+- Clone or Fork this repo
+
+- navigate to the porject folder in your terminal of choice
+
+- Install a local development server:
+
+  ```bash
+  python -m venv env
+  ```
+
+- Activate the environment
+
+  ```bash
+  source env/bin/activate
+  ```
+
+- Install the requirments for the project to run
+
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+- Rename the .env-dist file to .env
+
+- Hook up a Mongo DB and create a secret key are need by the .env file
+
+- Run the development server
+
+  ```bash
+  flask run
+  ```
+
+- When you have finished with the server, do the following in the console the server is running
+
+    To close the server
+
+  ```bash
+  ctrl + c
+  ```
+
+  To exit the virtual environment
+
+  ```bash
+  deactivate
+  ```
 
 ## Credits
 
 ### Content
+
+User created content and uploads.
 
 ### Media
 
