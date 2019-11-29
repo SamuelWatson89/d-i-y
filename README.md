@@ -51,23 +51,15 @@ Filtering displayed projects
 
 ## Technologies Used
 
-[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) | [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) | [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-[Python](https://www.python.org/)
-[MongoDB](https://www.mongodb.com/)
+[Python](https://www.python.org/) | [MongoDB](https://www.mongodb.com/)
 
-[Material CSS](https://materializecss.com/)
-[Flask](https://flask.palletsprojects.com/en/1.0.x/)
-[Pymongo](https://api.mongodb.com/python/current/)
+[Material CSS](https://materializecss.com/) | [Flask](https://flask.palletsprojects.com/en/1.0.x/) | [Pymongo](https://api.mongodb.com/python/current/)
 
-[Flask-Login](https://flask-login.readthedocs.io/en/latest/)
-[flask-paginate](https://pythonhosted.org/Flask-paginate/)
-[werkzeug](https://palletsprojects.com/p/werkzeug/)
+[Flask-Login](https://flask-login.readthedocs.io/en/latest/) | [flask-paginate](https://pythonhosted.org/Flask-paginate/) | [werkzeug](https://palletsprojects.com/p/werkzeug/)
 
-[flask_wtf](https://flask-wtf.readthedocs.io/en/stable/)
-[wtforms](https://wtforms.readthedocs.io/en/stable/)
+[flask_wtf](https://flask-wtf.readthedocs.io/en/stable/) | [wtforms](https://wtforms.readthedocs.io/en/stable/)
 
 ## Testing
 
