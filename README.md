@@ -63,7 +63,7 @@ Filtering displayed projects
 
 ## Testing
 
-Coming Soon.
+The applicaiyon has been to tested to work well on desktop, tablet and mobile devices.
 
 ## Deployment
 
