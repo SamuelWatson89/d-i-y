@@ -113,7 +113,8 @@ def get_projects():
                                name=current_user.username)
     return render_template('projects.html',
                            projects=projects,
-                           pagination=pagination)
+                           pagination=pagination,
+                           title="Welcome")
 
 
 # ? Login page route, handles andauthenticates the user if the credentials are correct
@@ -130,7 +131,9 @@ def login():
         flash('Sorry, that user does not exist')
         return render_template('login.html', form=form)
 
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form,
+                            title="Login"
+                            )
 
 
 # ? Register page route, handles validation of username, email and password.
@@ -160,7 +163,9 @@ def signup():
             flash('Thank you for signing up! Login with your info to continue.')
             return redirect(url_for('login'))
      
-    return render_template('signup.html', form=form)
+    return render_template('signup.html', form=form,
+                            title="Sign up and get started"
+                            )
 
 
 # ? Log out route, terminate the users login session and return them to the homepage.
@@ -175,7 +180,11 @@ def logout():
 @app.route('/add_project')
 @login_required
 def add_project():
-    return render_template('addproject.html', category=mongo.db.category.find(), name=current_user.username)
+    return render_template('addproject.html', 
+                            category=mongo.db.category.find(), 
+                            name=current_user.username,
+                            title="Submit a new project"
+                            )
 
 
 # ? Function to determine if uploaded files are allowed.
@@ -248,7 +257,8 @@ def view_project(projects_id):
                                projects=the_project,
                                name=current_user.username)
     return render_template('viewproject.html',
-                           projects=the_project)
+                           projects=the_project,
+                           title="Project")
 
 
 # ? Routine and functions to get the project ID form the database and allow the user to edit, provided its their project.
@@ -260,7 +270,8 @@ def edit_projects(projects_id):
     return render_template('editproject.html',
                            projects=the_projects,
                            category=all_categories,
-                           name=current_user.username)
+                           name=current_user.username,
+                           title="Edit Project")
 
 
 # ? Updsate the project image on its own seperate page.
@@ -270,7 +281,8 @@ def edit_image(projects_id):
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     return render_template('editimage.html',
                            projects=the_projects,
-                           name=current_user.username)
+                           name=current_user.username,
+                           title="Edit Image")
 
 # ? Routing and functions to update the databae collection with the new information provided
 @app.route('/update_projects/<projects_id>', methods=["GET", "POST"])
@@ -362,7 +374,8 @@ def view_profile(user_id):
     return render_template('userprofile.html',
                            name=current_user.username,
                            user=user,
-                           users_projects=users_projects)
+                           users_projects=users_projects,
+                           title="Users profile")
 
 
 if __name__ == '__main__':
