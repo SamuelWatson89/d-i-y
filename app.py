@@ -99,8 +99,6 @@ def get_projects():
     projects = mongo.db.projects.find().sort('_id', pymongo.DESCENDING)[
         offset: offset + per_page]
 
-    projects_to_render = projects.limit(per_page)
-
     pagination = Pagination(page=page, per_page=per_page,
                             total=projects.count(),
                             offset=offset,
