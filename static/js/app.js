@@ -1,3 +1,20 @@
+var $grid = $('.grid')
+
+$grid.hide()
+
+$grid.imagesLoaded(function () {
+    // Hide loader once images in grid have loaded
+    $('.loader').hide()
+    $grid.show()
+    // init Masonry after all images have loaded
+    $grid.masonry({
+        itemSelector: '.grid-item',
+        columnWidth: 80
+    });
+
+});
+
+
 var step_counter = 1;
 var material_counter = 1;
 

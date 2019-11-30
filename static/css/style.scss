@@ -41,6 +41,14 @@ main {
     }
 }
 
+//? Front page loader styling
+.loader {
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 //? Input styles
 
 [type="radio"]:checked+span:after,

@@ -51,7 +51,9 @@ Filtering displayed projects
 
 ## Technologies Used
 
-[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) | [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) | [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) | [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) | [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) | [Jquery](https://jquery.com/)
+
+[Masonary Grid](https://masonry.desandro.com/) | [ImageLoaded](https://masonry.desandro.com/)
 
 [Python](https://www.python.org/) | [MongoDB](https://www.mongodb.com/)
 
