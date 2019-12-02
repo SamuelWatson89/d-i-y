@@ -70,7 +70,7 @@ class LoginForm(FlaskForm):
         InputRequired(), Length(min=4, max=15)])
     password = PasswordField('<h6>Password &#128170;</h6>', validators=[
         InputRequired(), Length(min=8, max=80)])
-    remember = BooleanField('<h6>remember me</h6>')
+    remember = BooleanField('Remember me', description='Checkboxes can be tricky.')
 
 
 # ? Create the form for the register page
@@ -124,11 +124,10 @@ def login():
         user = mongo.db.users.find_one({'username': form.username.data})
         if user:
             if check_password_hash(user['password'], form.password.data):
-                login_user(User(user))
+                login_user(User(user), remember=form.remember.data)
                 return redirect(url_for('get_projects'))
         flash('Sorry, that user does not exist')
         return render_template('login.html', form=form)
-
     return render_template('login.html', form=form,
                             title="Login"
                             )

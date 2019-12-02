@@ -11,7 +11,7 @@
     }
 </style>
 
-<div class="container"> 
+<div class="container">
     <div class="row">
         <div class="col s12 l6 offset-l3 center-align">
             <div class="card account-form">
@@ -27,9 +27,7 @@
                                 {% if messages %}
                                 {% for message in messages %}
                                 <div class="row white-text red darken-1">
-                                    <div class="col center-align">
-                                        <p>{{ message }}</p>
-                                    </div>
+                                    <p class="center-align">{{ message }}</p>
                                 </div>
                                 {% endfor %}
                                 {% endif %}
@@ -45,8 +43,8 @@
 
                         <div class="row">
                             <div class="s-12">
-                                <button class="waves-effect waves-light btn-large amber accent-4" type="submit"
-                                    name="submit">Sign up</button>
+                                <button class="waves-effect waves-light btn amber accent-4" type="submit" name="submit">Sign
+                                    up</button>
                             </div>
                         </div>
                     </form>

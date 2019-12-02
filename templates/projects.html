@@ -51,8 +51,9 @@
                 </div>
 
                 <div class="row grid">
+                    <div class="grid-sizer"></div>
                     {% for project in projects %}
-                    <div class="grid-item col s12 m4">
+                    <div class="grid-item col">
                         <div class="card hoverable">
                             <div class="card-image">
                                 <a href="{{url_for('view_project', projects_id=project._id)}}">
