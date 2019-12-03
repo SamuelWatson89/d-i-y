@@ -17,6 +17,11 @@ main {
           flex: 1 0 auto;
 }
 
+#diy-side p {
+  font-size: 1.2rem;
+  text-shadow: 2px 1px 2px #3a3a3a;
+}
+
 .front-page-container .hoverable:hover {
   -webkit-box-shadow: 0 8px 17px 0 #26323833, 0 6px 20px 0 #26323833;
           box-shadow: 0 8px 17px 0 #26323833, 0 6px 20px 0 #26323833;

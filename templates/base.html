@@ -42,18 +42,23 @@
         </nav>
 
         {% if current_user.is_authenticated %}
-        <ul class="sidenav" id="diy-side">
-            <a>
-                <div class="user-view">
-                    <div class="background">
-                        <img src="https://placeimg.com/500/500/any">
-                    </div>
-                    <p class="white-text name">{{name.username}}</p>
-                    <p class="white-text email">{{name.email}}</p>
+        <ul class="sidenav amber accent-4" id="diy-side">
+            <div class="user-view">
+                <div class="background">
+                    <img src="https://placeimg.com/300/230/nature">
                 </div>
-            </a>
-            <li><a href=" {{ url_for('add_project') }}">Submit Project</a></li>
-            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                <p class="white-text name">{{name.username}}</p>
+                <p class="white-text email">{{name.email}}</p>
+            </div>
+            <li><a href="{{ url_for('view_profile', user_id=name._id) }}" class="waves-effect"><i
+                        class="material-icons left">person</i>Your
+                    Pojects</a>
+            </li>
+            <li><a href=" {{ url_for('add_project') }}" class="waves-effect"><i
+                        class="material-icons left">add_circle_outline</i>Submit
+                    Project</a></li>
+            <li><a href="{{ url_for('logout') }}" class="waves-effect"><i
+                        class="material-icons left">exit_to_app</i>Logout</a></li>
         </ul>
 
         {% else %}
@@ -90,10 +95,10 @@
                 <div class="col l4 offset-l2 s12">
                     <h5 class="black-text">Look around</h5>
                     <ul>
-                        <li><a class="black-text lighten-1" href="#!">Link 1</a></li>
-                        <li><a class="black-text lighten-1" href="#!">Link 2</a></li>
-                        <li><a class="black-text lighten-1" href="#!">Link 3</a></li>
-                        <li><a class="black-text lighten-1" href="#!">Link 4</a></li>
+                        <li><a class="black-text lighten-1" href="#!">View Project</a></li>
+                        <li><a class="black-text lighten-1" href="#!">About</a></li>
+                        <li><a class="black-text lighten-1" href="#!">Contact</a></li>
+                        <li><a class="black-text lighten-1" href="#!">Policies</a></li>
                     </ul>
                 </div>
             </div>
