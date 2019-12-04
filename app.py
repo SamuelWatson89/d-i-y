@@ -1,3 +1,4 @@
+# Import all required libraries
 import os
 from flask import Flask, render_template, redirect, request, url_for, current_app, flash
 from dotenv import load_dotenv
@@ -216,6 +217,7 @@ def insert_project():
                 temp_name = split[0]
                 ext = "." + split[1]
 
+                # ? Has image name so there are no duplicates
                 hashed_name = hashlib.md5(temp_name.encode())
                 hashed_file_name = hashed_name.hexdigest() + ext
 
@@ -271,7 +273,7 @@ def edit_projects(projects_id):
                            title="Edit Project")
 
 
-# ? Updsate the project image on its own seperate page.
+# ? Update the project image on its own seperate page.
 @app.route('/edit_image/<projects_id>')
 @login_required
 def edit_image(projects_id):
