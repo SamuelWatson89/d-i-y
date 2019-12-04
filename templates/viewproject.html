@@ -1,14 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
+    <div class="row page-header white">
+        <div class="row">
+            <div class="col s12 center-align white-text">
+                <h3><strong>{{projects.title}}</strong></h3>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col s12">
             <div class="card">
                 <div class="card-content black-text">
                     <div class="row">
                         <div class="col s12 m7">
-                            <span class="card-title"><strong>{{projects.title}}</strong></span>
-
                             <p>{{projects.category}} | {{projects.experience}}</p>
 
                             <p>Project by {{projects.creator}}</p>
@@ -26,8 +32,7 @@
                         </div>
 
                         <div class="col s12 m5">
-                            <img class="responsive-img"
-                                src="{{url_for('file', filename=projects['project_image_name'])}}"
+                            <img class="responsive-img" src="{{url_for('file', filename=projects['project_image_name'])}}"
                                 alt="{{projects.project_image_name}}" width="400">
                         </div>
                     </div>
@@ -35,9 +40,9 @@
 
                 {% if current_user.is_authenticated %}
                 {% if current_user.username.username == projects.creator %}
-                <div class="card-action">
+                <div class="card-action amber">
                     <a href="{{url_for('edit_projects', projects_id=projects._id)}}"
-                        class="waves-effect waves-light btn-small amber accent-4">Edit</a>
+                        class="waves-effect waves-light btn-small blue-grey darken-4">Edit</a>
 
                     <a class="waves-effect waves-red btn-small red darken-3 modal-trigger" href="#delete">Delete
                         Project</a><br />

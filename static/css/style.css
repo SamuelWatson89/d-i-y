@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=Siemreap:400|Mada:400");
 body,
 html {
+  font-size: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -9,12 +11,56 @@ html {
       -ms-flex-direction: column;
           flex-direction: column;
   background: #F6E8EA;
+  font-family: 'Mada', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 main {
   -webkit-box-flex: 1;
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
+}
+
+p {
+  margin-bottom: 1.25em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 2.75rem 0 1rem;
+  font-family: 'Siemreap', sans-serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 3.052em;
+}
+
+h2 {
+  font-size: 2.441em;
+}
+
+h3 {
+  font-size: 1.953em;
+}
+
+h4 {
+  font-size: 1.563em;
+}
+
+h5 {
+  font-size: 1.25em;
+}
+
+small,
+.text_small {
+  font-size: 0.8em;
 }
 
 #diy-side p {
@@ -38,6 +84,11 @@ main {
   background-image: linear-gradient(135deg, #FD6E6A 10%, #FFC600 100%);
   -webkit-clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 85%);
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 85%);
+}
+
+.page-header {
+  padding: 30px 0px 30px 0px;
+  background-image: linear-gradient(135deg, #FD6E6A 10%, #FFC600 100%);
 }
 
 .pagination li.active {
