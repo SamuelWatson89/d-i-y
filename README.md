@@ -83,15 +83,29 @@ The project is deployed with Heroku Platform, version control manged by GitHub, 
 - navigate to the porject folder in your terminal of choice
 
 - Install a local development server:
+  - MAC
+
+  ```bash
+  python3 -m venv env
+  ```
+
+  - Windows
 
   ```bash
   python -m venv env
   ```
 
 - Activate the environment
+  - MAC
 
   ```bash
   source env/bin/activate
+  ```
+
+  - Windows
+
+  ```bash
+  env/Scripts/avtivate
   ```
 
 - Install the requirments for the project to run
@@ -109,6 +123,8 @@ The project is deployed with Heroku Platform, version control manged by GitHub, 
   ```bash
   flask run
   ```
+
+- The server will run on localhost:5000, unless otherwise tated in your terminal
 
 - When you have finished with the server, do the following in the console the server is running
 
