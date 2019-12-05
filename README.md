@@ -1,6 +1,5 @@
 # [DIY Catalogue](http://d-i-y.herokuapp.com/)
 
-
 D-I-Y is a online catalogue of home crafts, creations lifstyle and heatlh projects, with step by step tutorials on how to create different items in and around the home, or even something to better yourself.
 Featuring unique user logins and editable step by step guides.
 
@@ -48,6 +47,7 @@ User profile
 
 Filtering displayed projects
     - Allow the user to filter the project by category or creator
+
 
 ## Technologies Used
 
