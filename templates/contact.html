@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row front-page-header white">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 center-align white-text">
+                <h2>Contact</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row front-page-container">
+        <div class="row">
+            <div class="col s12">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="row light-green darken-1">
+                    <div class="col s12">
+                        <p class="center-align">{{ message }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <div class="row">
+                    <form action="{{ url_for('send_mail') }}" method="POST" class="col s12" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">account_circle</i>
+                                <input id="name" name="name" type="text" class="validate" required>
+                                <label for="name">Name</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <i class="material-icons prefix">mail</i>
+                                <input id="email" name="email" type="email" class="validate" required>
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">message</i>
+                                <textarea id="message" name="message" class="materialize-textarea" required></textarea>
+                                <label for="message">Textarea</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <button class="btn waves-effect waves-light amber accent-4" type="submit" name="action">
+                                    <i class="material-icons right">save</i>
+                                    Mail me!
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

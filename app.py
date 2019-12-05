@@ -107,13 +107,14 @@ def get_projects():
                             )
     if current_user.is_authenticated:
         return render_template('projects.html',
-                               projects=projects,
-                               pagination=pagination,
-                               name=current_user.username)
+                                projects=projects,
+                                pagination=pagination,
+                                name=current_user.username,
+                                title="Welcome")
     return render_template('projects.html',
-                           projects=projects,
-                           pagination=pagination,
-                           title="Welcome")
+                            projects=projects,
+                            pagination=pagination,
+                            title="Welcome")
 
 
 # ? Login page route, handles andauthenticates the user if the credentials are correct
@@ -146,8 +147,8 @@ def signup():
         hashed_password = generate_password_hash(
             form.password.data, method='sha256')
         new_user = ({"username": form.username.data,
-                     "email": form.email.data,
-                     "password": hashed_password})
+                    "email": form.email.data,
+                    "password": hashed_password})
 
         if mongo.db.users.count_documents({'username': form.username.data}, limit=1) != 0:
             flash('Username is taken, please choose another (sorry!)')
@@ -160,7 +161,6 @@ def signup():
             mongo.db.users.insert_one(new_user)
             flash('Thank you for signing up! Login with your info to continue.')
             return redirect(url_for('login'))
-     
     return render_template('signup.html', form=form,
                             title="Sign up and get started"
                             )
@@ -254,7 +254,8 @@ def view_project(projects_id):
     if current_user.is_authenticated:
         return render_template('viewproject.html',
                                projects=the_project,
-                               name=current_user.username)
+                               name=current_user.username,
+                               title="Project")
     return render_template('viewproject.html',
                            projects=the_project,
                            title="Project")
@@ -376,6 +377,42 @@ def view_profile(user_id):
                            users_projects=users_projects,
                            title="Users profile")
 
+# ? About page
+@app.route('/about')
+def about():
+    if current_user.is_authenticated:
+        return render_template('about.html',
+                                name=current_user.username,
+                                title="About")
+    return render_template('about.html',
+                            title="About")
+
+
+# ? Copntact page
+@app.route('/contact')
+def contact():
+    if current_user.is_authenticated:
+        return render_template('contact.html',
+                                name=current_user.username,
+                                title="Contact")
+    return render_template('contact.html',
+                            title="Contact")
+
+
+# ? Route and functions to submit project to Mongo.
+# ? If there are any issues with image supplied, a flash message will appear tell the user where they went wrong.
+@app.route('/send_mail', methods=['GET', 'POST'])
+def send_mail():
+    if request.method == "POST":
+        mail = mongo.db.mail
+        mail_dict = request.form.to_dict()
+        mail.insert_one(mail_dict)
+
+        flash(
+            "Thanks! Your mail has been posted.")
+
+        return redirect(url_for('contact'))
+        
 
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),

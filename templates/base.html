@@ -62,15 +62,19 @@
         </ul>
 
         {% else %}
-        <ul class="sidenav" id="diy-side">
+        <ul class="sidenav amber accent-4" id="diy-side">
             <div class="user-view">
                 <div class="background">
-                    <img src="https://placeimg.com/500/500/any">
+                    <img src="https://placeimg.com/300/230/nature">
                 </div>
-                <p>Hello... Shall we get you signed up?</p>
+                <p class="white-text">Hello... Shall we get you signed up?</p>
             </div>
-            <li><a href=" {{ url_for('login') }}">Login</a></li>
-            <li><a href="{{ url_for('signup') }}">Sign Up!</a></li>
+
+            <li><a href=" {{ url_for('login') }}" class="waves-effect"><i class="material-icons left">input</i>Login</a></li>
+            <li><a href="{{ url_for('signup') }}" class="waves-effect"><i class="material-icons left">person_add</i>Sign
+                    Up!</a></li>
+            <li><a class="black-text lighten-1" href="{{ url_for('get_projects') }}"><i
+                        class="material-icons left">pageview</i>View Projects</a></li>
         </ul>
         {% endif %}
     </header>
@@ -95,10 +99,9 @@
                 <div class="col l4 offset-l2 s12">
                     <h5 class="black-text">Look around</h5>
                     <ul>
-                        <li><a class="black-text lighten-1" href="#!">View Project</a></li>
-                        <li><a class="black-text lighten-1" href="#!">About</a></li>
-                        <li><a class="black-text lighten-1" href="#!">Contact</a></li>
-                        <li><a class="black-text lighten-1" href="#!">Policies</a></li>
+                        <li><a class="black-text lighten-1" href="{{ url_for('get_projects') }}">View Projects</a></li>
+                        <li><a class="black-text lighten-1" href="{{ url_for('about') }}">About</a></li>
+                        <li><a class="black-text lighten-1" href="{{ url_for('contact') }}">Contact</a></li>
                     </ul>
                 </div>
             </div>
