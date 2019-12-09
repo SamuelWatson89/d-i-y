@@ -65,7 +65,19 @@ Filtering displayed projects
 
 ## Testing
 
-The applicaiyon has been to tested to work well on desktop, tablet and mobile devices.
+The application has been to tested to work well on desktop, tablet and mobile devices.
+
+Further automated testing as been completed using PyTest and Flask-Pytest libraries. These automated tests run to ensure the endpoints of the application are being called correctly, adn the application reaches the correct destination.
+
+To run these test, ensure you have installed the application locally following the guide below, and then run the following command in the development environment
+
+```bash
+pytest
+```
+
+This will automatically run the test found in test_app.py
+
+The tests will run and complete will all tests passing.
 
 ## Deployment
 
