@@ -89,6 +89,10 @@ class RegisterForm(FlaskForm):
 @app.route('/')
 @app.route('/get_projects')
 def get_projects():
+    '''
+    Get all the projects form the database and prepare them for display.
+    The results are paginated to 6 per page.
+    '''
     page = request.args.get(get_page_parameter(), type=int, default=1)
     per_page = 6
     offset = (page - 1) * per_page
@@ -120,6 +124,11 @@ def get_projects():
 # ? Login page route, handles andauthenticates the user if the credentials are correct
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    '''
+    Login page for the user to log in to the site and view their projects.
+    Username and password will be validated to ensure they are logging in with
+    the correct credentials.
+    '''
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -139,6 +148,11 @@ def login():
 # ? If the details input already exist in the database, a flash message is shown with the error.
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    '''
+    Created the sign up for and page for the user to register with the site
+    User names and emails addresses will be vlaidated with what is already used,
+    if email or username is used already, the user will be notified.
+    '''
     if current_user.is_authenticated:  
         return redirect(url_for('add_project'))
 
@@ -170,6 +184,9 @@ def signup():
 @app.route('/logout')
 @login_required
 def logout():
+    '''
+    Log the user out of the site, terminating their session
+    '''
     logout_user()
     return redirect(url_for('get_projects'))
 
@@ -178,6 +195,10 @@ def logout():
 @app.route('/add_project')
 @login_required
 def add_project():
+    '''
+    Take the user to the add project page provied they are logged in,
+    otherwise take them to the sign in page
+    '''
     return render_template('addproject.html', 
                             category=mongo.db.category.find(), 
                             name=current_user.username,
@@ -187,6 +208,9 @@ def add_project():
 
 # ? Function to determine if uploaded files are allowed.
 def allowed_image(filename):
+    '''
+    Determine if the file uploaded is an image.
+    '''
     if not "." in filename:
         return False
     ext = filename.rsplit(".", 1)[1]
@@ -200,6 +224,11 @@ def allowed_image(filename):
 # ? If there are any issues with image supplied, a flash message will appear tell the user where they went wrong.
 @app.route('/insert_project', methods=['GET', 'POST'])
 def insert_project():
+    '''
+    Save the project to the database. Several checks made to ensure the filename is unique and
+    the steps and materials are saved as an object (might not be the most effective solution, 
+    but im happy to have figured this much out!).
+    '''
     if request.method == "POST":
         if request.files:
             project_image = request.files['project_image']
@@ -217,7 +246,7 @@ def insert_project():
                 temp_name = split[0]
                 ext = "." + split[1]
 
-                # ? Has image name so there are no duplicates
+                # ? Hash the image name so there are no duplicates
                 hashed_name = hashlib.md5(temp_name.encode())
                 hashed_file_name = hashed_name.hexdigest() + ext
 
@@ -244,12 +273,18 @@ def insert_project():
 # ? load the file on its own page if viewed directly (right click > open image in new tab).
 @app.route('/file/<filename>')
 def file(filename):
+    '''
+    View the image
+    '''
     return mongo.send_file(filename)
 
 
 # ? Routing and functions to get the project infomation from the database via the project ID
 @app.route('/view_project/<projects_id>')
 def view_project(projects_id):
+    '''
+    View the project and all its information.
+    '''
     the_project = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     if current_user.is_authenticated:
         return render_template('viewproject.html',
@@ -265,6 +300,9 @@ def view_project(projects_id):
 @app.route('/edit_projects/<projects_id>')
 @login_required
 def edit_projects(projects_id):
+    '''
+    Provided the user is logged in and owns the project, it can be edited.
+    '''
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     all_categories = mongo.db.category.find()
     return render_template('editproject.html',
@@ -278,6 +316,9 @@ def edit_projects(projects_id):
 @app.route('/edit_image/<projects_id>')
 @login_required
 def edit_image(projects_id):
+    '''
+    Edit the image for the project on a seperate page
+    '''
     the_projects = mongo.db.projects.find_one({"_id": ObjectId(projects_id)})
     return render_template('editimage.html',
                            projects=the_projects,
@@ -287,6 +328,9 @@ def edit_image(projects_id):
 # ? Routing and functions to update the databae collection with the new information provided
 @app.route('/update_projects/<projects_id>', methods=["GET", "POST"])
 def update_projects(projects_id):
+    '''
+    Take the changes the user has made to the project and update them in the database
+    '''
     if request.method == "POST":
         projectTitle = request.form.get('title')
         projectCreator = request.form.get('creator')
@@ -321,6 +365,9 @@ def update_projects(projects_id):
 # ? Routing and functions to update the databae collection with the new information provided
 @app.route('/update_image/<projects_id>', methods=["GET", "POST"])
 def update_image(projects_id):
+    '''
+    Validate, hash the image name and upload the new image for the project.
+    '''
     if request.method == "POST":
         if request.files:
             project_image = request.files['project_image']
@@ -362,6 +409,9 @@ def update_image(projects_id):
 # ? Delete the project from the database
 @app.route('/delete_project/<projects_id>')
 def delete_project(projects_id):
+    '''
+    Let it go...
+    '''
     mongo.db.projects.remove({'_id': ObjectId(projects_id)})
     return redirect(url_for('get_projects'))
 
@@ -369,6 +419,9 @@ def delete_project(projects_id):
 # ? User profile page
 @app.route('/view_profile/<user_id>')
 def view_profile(user_id):
+    '''
+    Display the projects which the current logged in user has submitted
+    '''
     user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
     users_projects = mongo.db.projects.find()
     return render_template('userprofile.html',

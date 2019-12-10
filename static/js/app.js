@@ -1,3 +1,6 @@
+// ? Masonary Gird initialize. Displays a loader on the page until all images are loaded and ready
+// ? to display the projects in the correct format.
+
 var $grid = $('.grid')
 
 $grid.hide()
@@ -15,10 +18,12 @@ $grid.imagesLoaded(function () {
 
 });
 
+// ? FUnctions to add and remove new step and material input fields on the add and edit project pages.
 
 var step_counter = 1;
 var material_counter = 1;
 
+// ? Adds a new step input to the add project or edit project page.
 function addStep(divName) {
     var addStep = document.createElement('div');
     addStep.setAttribute("class", "input-field col s12")
@@ -27,6 +32,7 @@ function addStep(divName) {
     step_counter++;
 }
 
+// ? Remvoes a step input from the add project or edit project page.
 function removeStep() {
     var btn = document.getElementsByClassName('remove')
     for (var i = 0; i < btn.length; i++) {
@@ -43,6 +49,7 @@ function removeStep() {
     }
 }
 
+// ? Adds a new material input to the add project or edit project page.
 function addMaterial(divName) {
     var addMaterial = document.createElement('div');
     addMaterial.setAttribute("class", "input-field col s12")
@@ -51,6 +58,7 @@ function addMaterial(divName) {
     material_counter++;
 }
 
+// ? Removes a material input from the add project or edit project page.
 function removeMaterial() {
     var btn = document.getElementsByClassName('removeMaterial')
     for (var i = 0; i < btn.length; i++) {

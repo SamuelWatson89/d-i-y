@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Siemreap:400|Mada:400');
 
-
 $main-yellow: #ffab00;
+$main-black: #1a1a1a;
 
 body,
 html {
@@ -176,7 +176,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
     background: rgba(255, 255, 255, 0.384);
 
     label {
-        color: black;
+        color: $main-black;
     }
 }
 
