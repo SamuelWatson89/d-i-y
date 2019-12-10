@@ -48,7 +48,6 @@ User profile
 Filtering displayed projects
     - Allow the user to filter the project by category or creator
 
-
 ## Technologies Used
 
 [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) | [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) | [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) | [Jquery](https://jquery.com/)
@@ -82,8 +81,11 @@ The tests will run and complete will all tests passing.
 ## Deployment
 
 The project is deployed with Heroku Platform using the Gunicorn production server, version control mangaged by GitHub, ensuring there are no development tools or processes running on the live version of the app.
+Heroku will automattically update the running up form teh master branch of the application of GitHub, ensuring that lastest updates are always ready for users, once tested.
 
 ### To run this project locally
+
+The application is run from a single app file (app.py).
 
 - Ensure the following are installed
 
@@ -151,6 +153,12 @@ The project is deployed with Heroku Platform using the Gunicorn production serve
   ```bash
   deactivate
   ```
+
+### Bugs to fix
+
+When adding a new step or material, then deleting it again, the counter does not take this into account and continues adding 
+
+Deleting step 2 and then adding another step will add step 3, not 2.
 
 ## Credits
 
