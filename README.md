@@ -81,7 +81,7 @@ The tests will run and complete will all tests passing.
 
 ## Deployment
 
-The project is deployed with Heroku Platform, version control manged by GitHub, ensuring there are no development tools or processes running on the live version of the app.
+The project is deployed with Heroku Platform using the Gunicorn production server, version control mangaged by GitHub, ensuring there are no development tools or processes running on the live version of the app.
 
 ### To run this project locally
 
