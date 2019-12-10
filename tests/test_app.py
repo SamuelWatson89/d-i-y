@@ -1,8 +1,6 @@
 import pytest
 from flask import url_for
 
-from app import get_projects
-
 
 class TestApp:
 
