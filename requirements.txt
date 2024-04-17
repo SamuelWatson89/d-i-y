@@ -4,7 +4,7 @@ autopep8==1.4.4
 Click==7.0
 colorama==0.4.1
 dnspython==2.6.1
-Flask==1.0.3
+Flask==2.2.5
 Flask-Hashing==1.1
 Flask-Login==0.4.1
 Flask-Material==0.1.1
